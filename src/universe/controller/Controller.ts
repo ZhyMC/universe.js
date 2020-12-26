@@ -1,10 +1,11 @@
 import ICommanderManager from "../command/ICommandManager";
 import IModelManager from "../model/IModelManager";
 import IController from "./IController";
+import LokiDB from "lokijs";
 
 abstract class Controller implements IController{
     protected model: IModelManager;
-    protected commander: ICommanderManager
+    protected commander: ICommanderManager;
     constructor(commander:ICommanderManager,modelmanager:IModelManager){
         this.model = modelmanager;
         this.commander = commander;

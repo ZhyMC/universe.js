@@ -16,3 +16,5 @@ class CommandManager implements ICommandManager{
         return (this.cmds.get(cmd) as ICommand).isActive();
     }
 }
+
+export default CommandManager;

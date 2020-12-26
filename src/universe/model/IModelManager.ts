@@ -1,9 +1,16 @@
 import IModel from "./IModel";
+import LokiDB from "lokijs";
+
+type DBModelLine = {
+    key:string
+};
+
 
 interface IModelManager{
+    readonly db : LokiDB;
     setEnabled() : void;
-    add(model:IModel) : void;
-    get(name:string) : IModel;
+    addModel(model:IModel) : void;
+    getModel(name:string) : IModel;
 }
 
 export default IModelManager;

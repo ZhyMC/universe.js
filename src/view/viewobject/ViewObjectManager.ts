@@ -1,20 +1,25 @@
+import PlayGround from "../playground/PlayGround";
+import IViewObject from "./IViewObject";
 import IViewObjectManager from "./IViewObjectManager";
+import * as Three from "three";
 
-class ViewObjectManager implements IViewObjectManager<THREE.Mesh>{
-    private vobjs:Map<string,THREE.Mesh[]> = new Map();
-    private keymap:Map<THREE.Mesh,string> = new Map();
+class ViewObjectManager implements IViewObjectManager{
+    private vobjs:Map<string,IViewObject[]> = new Map();
+    private keymap:Map<IViewObject,string> = new Map();
     
-    private scene : THREE.Scene;
-    constructor(scene:THREE.Scene){
+    private scene : Three.Scene;
+    constructor(scene:Three.Scene){
         this.scene = scene;
     }
-    add(key:string,vobj:THREE.Mesh){
-        if(this.count(key) == 0)
-            this.vobjs.set(key,[]);
+    add(key:string,vobj:IViewObject){
+        if(this.count(key) == 0){
+            this.vobjs.set(key,[vobj]);
+        }else{
+            let vobjs = this.find(key);
+            vobjs.push(vobj);    
+        }
         
-        let vobjs = this.find(key);
-        vobjs.push(vobj);
-        this.scene.add(vobj);
+        this.scene.add(vobj.getObject3D());
         this.keymap.set(vobj,key);
     }
 
@@ -23,9 +28,9 @@ class ViewObjectManager implements IViewObjectManager<THREE.Mesh>{
             return;
         
         for(let vobj of this.find(key))
-            this.scene.remove(vobj);
+            this.scene.remove(vobj.getObject3D());
     }
-    remove(vobj:THREE.Mesh){
+    remove(vobj:IViewObject){
         if(!this.keymap.has(vobj))
             throw new Error("this view object isn't managed")
 
@@ -36,7 +41,7 @@ class ViewObjectManager implements IViewObjectManager<THREE.Mesh>{
 
         this.find(key).splice(index,1);
 
-        this.scene.remove(vobj);
+        this.scene.remove(vobj.getObject3D());
         this.keymap.delete(vobj);
     }
     count(key:string):number{
@@ -45,7 +50,7 @@ class ViewObjectManager implements IViewObjectManager<THREE.Mesh>{
 
         return this.vobjs.get(key)?.length as number;
     }
-    private getVObjIndex(key:string,vobj:THREE.Mesh):number{
+    private getVObjIndex(key:string,vobj:IViewObject):number{
 
         try{
             let vobjs = this.find(key);
@@ -55,13 +60,13 @@ class ViewObjectManager implements IViewObjectManager<THREE.Mesh>{
         }
 
     }
-    findOne(key:string) : THREE.Mesh{
+    findOne(key:string) : IViewObject{
         return this.find(key)[0];
     }
-    find(key:string) : THREE.Mesh[]{
+    find(key:string) : IViewObject[]{
         if(this.count(key) == 0)
             throw new Error("can't find view objects");
-        return this.vobjs.get(key) as THREE.Mesh[];
+        return this.vobjs.get(key) as IViewObject[];
     }
 
 }

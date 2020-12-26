@@ -1,6 +1,7 @@
 import IDataModel from "./IDataModel";
 
 class DataModel implements IDataModel{
+    public key:string = "";
     constructor(){
 
     }

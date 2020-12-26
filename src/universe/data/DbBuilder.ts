@@ -1,5 +1,5 @@
 import LokiDB from "lokijs";
-import DataModel from "./DataModel/DataModel";
+import DataModel from "./DataModel";
 
 class DbBuilder{
     private db : LokiDB;

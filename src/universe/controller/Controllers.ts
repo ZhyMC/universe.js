@@ -3,9 +3,12 @@ import Controller from "./Controller";
 import IController from "./IController";
 
 class Controllers implements IController{
-    private controllers : IController[];
-    constructor(controllers:IController[]){
-        this.controllers = controllers;
+    private controllers : IController[] = [];
+    constructor(){
+        
+    }
+    addController(controller : IController){
+        this.controllers.push(controller);
     }
     getName(){
         return "ControllerManager";
