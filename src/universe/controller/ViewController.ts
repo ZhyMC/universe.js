@@ -1,15 +1,15 @@
-import IModelManager from "../model/IModelManager";
 import IController from "./IController";
 import IViewObjectManager from "../../view/viewobject/IViewObjectManager";
 import MaterialContainer from "../../view/MaterialContainer";
+import LokiDB from "lokijs";
 
 abstract class Controller implements IController{
-    protected model: IModelManager;
+    protected db: LokiDB;
     protected viewobj: IViewObjectManager;
     protected mtl : MaterialContainer;
     
-    constructor(viewobj:IViewObjectManager,modelmanager:IModelManager,mtlcontainer:MaterialContainer){
-        this.model = modelmanager;
+    constructor(viewobj:IViewObjectManager,db:LokiDB,mtlcontainer:MaterialContainer){
+        this.db = db;
         this.viewobj = viewobj;
         this.mtl = mtlcontainer;
     }

@@ -1,5 +1,6 @@
 import IDataModel from "./IDataModel";
 
+
 class DataModel implements IDataModel{
     public key:string = "";
     constructor(){
@@ -12,7 +13,9 @@ class DataModel implements IDataModel{
         return this.constructor.name;
     }
     getSchema(){
-        return Object.keys(this);
+        return Object.entries(this).map(([key,value])=>{
+            return {key,def_value:value};
+        });
     }
 }
 

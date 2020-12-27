@@ -7,16 +7,20 @@ class PlayGround{
     private obj_manager;
     private scene : Three.Scene;
     private camera : Three.Camera;
-    private dlight:Three.DirectionalLight;
+    private dlight : Three.DirectionalLight;
     constructor(){
         this.scene = new Three.Scene();
+        
+        //this.scene.background=new Three.Color("white")
         this.obj_manager = new ViewObjectManager(this.scene);
 
-        this.dlight = new Three.DirectionalLight();
-        this.obj_manager.add("sunlight",new SimpleViewObject(this.dlight));
 
-        this.camera = new Three.PerspectiveCamera();
-        this.obj_manager.add("camera",new SimpleViewObject(this.camera));
+        this.dlight = new Three.DirectionalLight(0xFFFFFF,1);
+        this.obj_manager.set("sunlight",new SimpleViewObject(this.dlight));
+
+        this.camera = new Three.PerspectiveCamera(75,2,0.1,50);
+        this.obj_manager.set("camera",new SimpleViewObject(this.camera));
+
 
     }
     getViewObjectManager(){

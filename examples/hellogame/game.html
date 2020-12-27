@@ -11,14 +11,19 @@
     </head>
 
     <canvas id="canvas" width="900" height="540"></canvas>
-    <script src = "game.js">            
-    </script>
+    <script src="game.js"></script>
 
     <script>
         let canvas = document.querySelector("#canvas");
 
-        new Game.default(canvas);
+        let game = new Game.default(canvas,"assets");
 
+        game.init().then(()=>{
+            console.log("game loaded");
+            game.start();
+            game.setRendering(true);
+            console.log("game start");
+        })
     </script>
 
 

@@ -21,6 +21,7 @@ class HTMLImageLoader{
     }
     private onLoad(){
         this.state = LoaderState.LOADED;
+        this.loaded_defer.resolve();
     }
     getURL(){
         return this.url;

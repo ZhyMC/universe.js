@@ -5,33 +5,37 @@ import ICommand from "../universe/command/ICommand";
 
 import PlayGround from "../view/playground/PlayGround";
 import * as Three from "three";
-import ModelManager from "../universe/model/ModelManager";
 import LokiDB from "lokijs";
 import IModel from "../universe/model/IModel";
 import IViewObjectManager from "../view/viewobject/IViewObjectManager";
 import ViewObjectManager from "../view/viewobject/ViewObjectManager";
 import MaterialContainer from "../view/MaterialContainer";
+import DataModel from "../universe/data/DataModel";
+import DbBuilder from "../universe/data/DbBuilder";
 
 class WebGLGame{
     protected commander : CommandManager;
-    protected model_manager : ModelManager;
     protected viewobj_manager : IViewObjectManager;
     protected material_manager : MaterialContainer;
+    protected playground : PlayGround;
+    protected db : LokiDB = new LokiDB("");
+
+    protected inited : boolean = false;
 
     private controllers : Controllers;
-    private playground : PlayGround;
     private renderer;
+
     private alive : boolean = false;
     private rendering : boolean =  false;
     private fixed_loop_handler? : number;
     private tick = 0;
 
-    constructor(canvas:HTMLCanvasElement,playground:PlayGround){
+    constructor(canvas:HTMLCanvasElement){
 
         this.commander = new CommandManager();
-        this.playground = playground;
+        this.playground = new PlayGround();
         this.material_manager = new MaterialContainer();
-        this.model_manager = new ModelManager(new LokiDB("game"));
+
         this.viewobj_manager = this.playground.getViewObjectManager();
        
         this.controllers = new Controllers();
@@ -39,10 +43,10 @@ class WebGLGame{
         this.renderer = new Three.WebGLRenderer({
             canvas
         });
-        this.start();
     }
-    addModel(model:IModel){
-        this.model_manager.addModel(model);
+    setDataModels(datamodels:DataModel[]){
+        this.db = new DbBuilder(datamodels).getDatabase();
+
     }
     addCommand(cmd:ICommand){
         this.commander.addCommand(cmd);
@@ -53,7 +57,15 @@ class WebGLGame{
     setRendering(r:boolean){
         this.rendering = r;
     }
-    private start(){
+    async init(){
+        this.inited = true;
+    }
+    start(){
+        if(this.alive)
+            throw new Error("this game has already started");
+        if(!this.inited)
+            throw new Error("this game hasn't inited");
+        
         this.alive = true;
         this.controllers.start();
         this.next_render_loop();

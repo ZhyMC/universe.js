@@ -7,10 +7,11 @@ class MaterialContainer{
 
     }
     async loadSpriteMtl(key:string,url:string){
-        let loader = new HTMLImageLoader(url);
-        let img = await loader.getImage();
+        let loader = new Three.TextureLoader();
+        let texture = await new Promise<Three.Texture>((r)=>loader.load(url,r));
+
         let mtl = new Three.SpriteMaterial({
-            map:new Three.Texture(img)
+            map:texture
         });
         this.set(key,mtl);
     }
@@ -18,7 +19,12 @@ class MaterialContainer{
         this.map.set(key,mtl);
     }
     get(key : string){
+        if(!this.map.has(key))
+            throw new Error(`this material ${key} doesn't exists`)
         return this.map.get(key) as Three.Material;
+    }
+    getSpriteMtl(key:string){
+        return this.get(key) as Three.SpriteMaterial;
     }
 }
 

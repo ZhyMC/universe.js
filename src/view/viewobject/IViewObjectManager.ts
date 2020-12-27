@@ -1,14 +1,15 @@
 import IViewObject from "./IViewObject";
+import * as Three from "three"
 
 interface IViewObjectManager{
 
-    add(key:string,vobj:IViewObject):void;
-    remove(vobj:IViewObject):void;
-    clear(key:string):void;
-    count(key:string):number;
-    findOne(key:string):IViewObject;
-    find(key:string):IViewObject[];
+    ensure(key:string,exists:boolean,factory:()=>IViewObject):void;
+    set(key:string,vobj:IViewObject):void;
+    remove(key:string):void;
+    has(key:string):boolean;
 
+    query(key:string):IViewObject;
+    find(key:string):Three.Object3D;
 }
 
 export default IViewObjectManager;

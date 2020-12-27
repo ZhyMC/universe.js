@@ -9,7 +9,26 @@ import PlayGround from "./view/playground/PlayGround";
 import ICommand from "./universe/command/ICommand";
 import HTMLCommand from "./universe/command/htmlcommand/HTMLCommand";
 import HTMLCommandContext from "./universe/command/htmlcommand/HTMLCommandContext";
+import ImageViewObject from "./view/viewobject/ImageViewObject";
+import SingleModel from "./universe/model/SingleModel";
+import BindedModel from "./universe/model/BindedModel";
 
 import Game from "./game/Game";
 
-export {HTMLCommandContext,HTMLCommand,DataModel,Model,IModel,ICommand,IDataModel,IController,PlayGround,Controller,ViewController,Game};
+export {
+    SingleModel,
+    BindedModel,
+    ImageViewObject,
+    HTMLCommandContext,
+    HTMLCommand,
+    DataModel,
+    Model,
+    IModel,
+    ICommand,
+    IDataModel,
+    IController,
+    PlayGround,
+    Controller,
+    ViewController,
+    Game
+};

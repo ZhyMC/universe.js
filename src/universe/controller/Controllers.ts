@@ -1,5 +1,3 @@
-import IModelManager from "../model/IModelManager";
-import Controller from "./Controller";
 import IController from "./IController";
 
 class Controllers implements IController{
@@ -19,8 +17,17 @@ class Controllers implements IController{
         })
     }
     doTick(tick:number){
+        let errs : any[] = [];
         this.controllers.forEach((c)=>{
-            c.doTick(tick);
+            try{
+                c.doTick(tick);
+            }catch(err){
+                errs.push(err);
+            }
+        });
+    
+        errs.forEach((err)=>{
+            throw err;
         })
     }
 }

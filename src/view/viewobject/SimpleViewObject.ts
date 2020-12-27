@@ -1,6 +1,6 @@
 import * as Three from "three";
 import IViewObject from "./IViewObject"
-class NormalViewObject implements IViewObject{
+class SimpleViewObject implements IViewObject{
     private obj : Three.Object3D;
     constructor(obj : Three.Object3D){
         this.obj = obj;
@@ -14,4 +14,4 @@ class NormalViewObject implements IViewObject{
 
 }
 
-export default NormalViewObject;
+export default SimpleViewObject;

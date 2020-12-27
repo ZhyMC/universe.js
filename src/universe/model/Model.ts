@@ -8,20 +8,32 @@ type DBModelLine = {
 
 
 class Model extends EventEmitter implements IModel{
-    protected db : LokiDB = new LokiDB("");
-    setDataModel(db : LokiDB){
+    protected db : LokiDB;
+    constructor(db : LokiDB){
+        super();
         this.db = db;
     }
     getName(){
         return this.constructor.name;
     }
-    protected add<T extends DBModelLine>(model_name:string,obj:T) : number{
-        return (this.db.getCollection<T>(model_name).insertOne(obj) as LokiObj).$loki;
+    public add<T extends DBModelLine>(obj:T,datamodel:string) : number{
+        return (this.db.getCollection<T>(datamodel).insertOne(obj) as LokiObj).$loki;
     }
-    protected find(model_name:string,key:string) : any{
-        let res = this.db.getCollection(model_name).findOne({key});
+    public has(key:string,datamodel:string) : boolean{
+        try{
+            this.find(datamodel,key);
+            return true; 
+        }catch(err){
+            return false;
+        }
+    }
+    public remove(key:string,datamodel:string){
+        this.db.getCollection(datamodel).findAndRemove({key});
+    }
+    public find(key:string,datamodel:string) : any{
+        let res = this.db.getCollection(datamodel).findOne({key});
         if(!res)
-            throw new Error(`${model_name} - ${key} doesn't exists`);
+            throw new Error(`${datamodel} - ${key} doesn't exists`);
         return res;
     }
 

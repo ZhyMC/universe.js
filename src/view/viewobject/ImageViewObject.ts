@@ -5,10 +5,10 @@ import IViewObject from "./IViewObject";
 class ImageViewObject implements IViewObject{
     private sprite : Three.Sprite = new Three.Sprite();
     constructor(){
-
+        this.sprite = new Three.Sprite();
     }
-    async setImageMtl(mtl:Three.SpriteMaterial){
-        this.sprite = new Three.Sprite(mtl);
+    setImageMtl(mtl:Three.SpriteMaterial){
+        this.sprite.material = mtl;
     }
     getObject3D() : Three.Object3D{
         return this.sprite;
