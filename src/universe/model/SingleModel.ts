@@ -1,21 +1,21 @@
 import BindedModel from "./BindedModel";
 import LokiDB from "lokijs";
-import IDataModel from "../data/IDataModel";
+import DataModel from "../data/DataModel";
 
 class SingleModel extends BindedModel{
     private binded_key : string;
-    private _datamodel : IDataModel;
-    constructor(binded_key:string,datamodel:IDataModel,db:LokiDB){
+    private _datamodel : DataModel;
+    constructor(binded_key:string,datamodel:DataModel,db:LokiDB){
         super(datamodel,db);
         this.binded_key = binded_key;
         this._datamodel = datamodel;
     }
     add(obj:any = {}){
-        let schema = this._datamodel.getSchema();
+        let schema = this._datamodel;
         let data : any = {};
 
-        for(let {key,def_value} of schema){
-            data[key] = def_value;
+        for(let prop in schema.prop){
+            data[prop] = schema.prop[prop].default;
         }
         for(let key in obj){
             data[key] = obj[key];

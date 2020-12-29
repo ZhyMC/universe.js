@@ -12,7 +12,7 @@ class DbBuilder{
     }
     private initCollections(){
         this.models.forEach((model)=>{
-            this.db.addCollection(model.getName(),{indices:model.getIndice()});
+            this.db.addCollection(model.name,{indices:model.indice || []});
         });
     }
     getDatabase(){

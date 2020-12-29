@@ -3,21 +3,13 @@ import PlayerModel from "../model/PlayerModel";
 
 class PlayerController extends Universe.Controller{
     start(){
+        let model = new PlayerModel(this.db);
+        model.add();
     }
     doTick(tick:number){
-        if(tick<100)return;
-        let p = new PlayerModel(this.db);
-        if(tick == 100){
-            p.add();
-    
-        }
-        if(tick == 200){
-            p.remove();
-        }
-
-        if(!p.has())return;
-
-        let player = p.find();
+        let model = new PlayerModel(this.db);
+        if(!model.has())return;
+        let player = model.find();
 
         if(this.commander.isActive("a")){
             player.x = player.x - 0.1;

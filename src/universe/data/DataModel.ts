@@ -1,22 +1,15 @@
-import IDataModel from "./IDataModel";
 
-
-class DataModel implements IDataModel{
-    public key:string = "";
-    constructor(){
-
-    }
-    getIndice() : string[]{
-        return [];
-    }
-    getName(){
-        return this.constructor.name;
-    }
-    getSchema(){
-        return Object.entries(this).map(([key,value])=>{
-            return {key,def_value:value};
-        });
-    }
+type DataModelProperty = {
+    default : any,
+    [key:string]:any
 }
+
+type DataModel ={
+    name:string,
+    indice?:string[],
+    prop:{
+        [key:string]:DataModelProperty
+    }
+};
 
 export default DataModel;

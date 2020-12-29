@@ -1,5 +1,4 @@
 import DataModel from "./universe/data/DataModel";
-import IDataModel from "./universe/data/IDataModel";
 import IController from "./universe/controller/IController";
 import ViewController from "./universe/controller/ViewController";
 import Controller from "./universe/controller/Controller";
@@ -25,7 +24,6 @@ export {
     Model,
     IModel,
     ICommand,
-    IDataModel,
     IController,
     PlayGround,
     Controller,

@@ -1,11 +1,11 @@
 import * as Universe from "universe.js";
 import * as Three from "three"
 import LokiDB from "lokijs";
-import DataModel_Player from "../data/PlayerModel";
+import DataModels from "../data/DataModels";
 
 class PlayerModel extends Universe.SingleModel{
     constructor(db:LokiDB){
-        super("player",new DataModel_Player(),db);
+        super("player",DataModels.Player,db);
     }
     getPosition(){
         let obj = this.find();

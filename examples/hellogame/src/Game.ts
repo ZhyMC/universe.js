@@ -1,10 +1,9 @@
 import * as Universe from "universe.js";
 
 import PlayerView from "./controller/view/PlayerView";
-import StartupView from "./controller/view/StartupView";
 import PlayerController from "./controller/PlayerController";
 
-import DataModel_Player from "./data/PlayerModel";
+import DataModels from "./data/DataModels";
 
 class Game extends Universe.Game{
     private cmd_ctx;
@@ -20,9 +19,7 @@ class Game extends Universe.Game{
     async init(){
         await this.loadAssets();
 
-        this.setDataModels([
-            new DataModel_Player()
-        ]);
+        this.setDataModels(Object.values(DataModels));
 
         this.addCommand(new Universe.HTMLCommand("a",this.cmd_ctx));
         this.addCommand(new Universe.HTMLCommand("d",this.cmd_ctx));
@@ -31,7 +28,6 @@ class Game extends Universe.Game{
         
         this.addController(this.cmd_ctx);
         this.addController(new PlayerController(this.commander,this.db));
-        this.addController(new StartupView(this.viewobj_manager,this.db,this.material_manager));
         this.addController(new PlayerView(this.viewobj_manager,this.db,this.material_manager));
 
         this.inited = true;
