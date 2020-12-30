@@ -7,7 +7,11 @@ const datamodels : {[key:string] : Universe.DataModel} = {
             health : { default:10 },
             x : { default : 0 },
             y : { default : 0 },   
+            z : { default : 0 }
         }
-    }
+    },
+    Chunk : Universe.ChunkModel.getDataModel(),
+    Brick : Universe.BrickModel.getDataModel()
+
 };
 export default datamodels;

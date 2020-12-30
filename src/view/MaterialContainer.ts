@@ -6,13 +6,27 @@ class MaterialContainer{
     constructor(){
 
     }
-    async loadSpriteMtl(key:string,url:string){
+    private async loadTexture(url:string){
         let loader = new Three.TextureLoader();
-        let texture = await new Promise<Three.Texture>((r)=>loader.load(url,r));
+        
+        let texture = (await loader.loadAsync(url)) as Three.Texture; 
+        texture.minFilter = Three.LinearFilter;
+        texture.magFilter = Three.NearestFilter;
+
+        return texture;
+    }
+    async loadSpriteMtl(key:string,url:string){
 
         let mtl = new Three.SpriteMaterial({
-            map:texture
+            map:await this.loadTexture(url)
         });
+        this.set(key,mtl);
+    }
+    async loadBasicMtl(key:string,url:string){
+        
+        let mtl = new Three.MeshBasicMaterial({
+            map:await this.loadTexture(url)
+        })
         this.set(key,mtl);
     }
     set(key : string,mtl : Three.Material){
@@ -22,6 +36,9 @@ class MaterialContainer{
         if(!this.map.has(key))
             throw new Error(`this material ${key} doesn't exists`)
         return this.map.get(key) as Three.Material;
+    }
+    getBasicMtl(key:string){
+        return this.get(key) as Three.MeshBasicMaterial;
     }
     getSpriteMtl(key:string){
         return this.get(key) as Three.SpriteMaterial;

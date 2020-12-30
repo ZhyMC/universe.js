@@ -3,7 +3,7 @@ import * as Three from "three"
 
 interface IViewObjectManager{
 
-    ensure(key:string,exists:boolean,factory:()=>IViewObject):void;
+    ensure(key:string,exists:boolean,factory:()=>IViewObject):any;
     set(key:string,vobj:IViewObject):void;
     remove(key:string):void;
     has(key:string):boolean;

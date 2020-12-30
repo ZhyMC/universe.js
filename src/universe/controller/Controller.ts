@@ -1,6 +1,7 @@
 import ICommanderManager from "../command/ICommandManager";
 import IController from "./IController";
 import LokiDB from "lokijs";
+import DataWatcher from "../data/DataWatcher";
 
 abstract class Controller implements IController{
     protected db: LokiDB;

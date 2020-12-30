@@ -11,16 +11,28 @@ import HTMLCommandContext from "./universe/command/htmlcommand/HTMLCommandContex
 import ImageViewObject from "./view/viewobject/ImageViewObject";
 import SingleModel from "./universe/model/SingleModel";
 import BindedModel from "./universe/model/BindedModel";
+import BrickViewObject from "./view/viewobject/BrickViewObject";
+import BrickModel from "./map/BrickModel";
+import ChunkModel from "./map/ChunkModel";
+import ChunkManagerModel from "./map/ChunkManagerModel"
+import ChunkViewObject from "./view/viewobject/ChunkViewObject";
+import DataWatcher from "./universe/data/DataWatcher";
 
 import Game from "./game/Game";
 
 export {
+    DataWatcher,
+    ChunkViewObject,
+    ChunkManagerModel,
     SingleModel,
     BindedModel,
+    BrickViewObject,
     ImageViewObject,
     HTMLCommandContext,
     HTMLCommand,
     DataModel,
+    BrickModel,
+    ChunkModel,
     Model,
     IModel,
     ICommand,

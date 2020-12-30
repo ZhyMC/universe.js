@@ -1,9 +1,14 @@
 import * as Universe from "universe.js";
 
 import PlayerView from "./controller/view/PlayerView";
+import BrickView from "./controller/view/ChunkView";
+
 import PlayerController from "./controller/PlayerController";
+import MaploadController from "./controller/MaploadController";
 
 import DataModels from "./data/DataModels";
+
+
 
 class Game extends Universe.Game{
     private cmd_ctx;
@@ -28,15 +33,22 @@ class Game extends Universe.Game{
         
         this.addController(this.cmd_ctx);
         this.addController(new PlayerController(this.commander,this.db));
-        this.addController(new PlayerView(this.viewobj_manager,this.db,this.material_manager));
-
+        this.addController(new MaploadController(this.commander,this.db));
+        this.addController(new PlayerView(this.viewobj_manager,this.material_manager,this.datawatcher));
+        this.addController(new BrickView(this.viewobj_manager,this.material_manager,this.datawatcher));
         this.inited = true;
     }
-    private loadAsset(path:string,key:string){
+    private loadSpriteAsset(path:string,key:string){
         return this.material_manager.loadSpriteMtl(key,`${this.assets_dir}/${path}.png`);
     }
+    private loadBasicMtl(path:string,key:string){
+        return this.material_manager.loadBasicMtl(key,`${this.assets_dir}/${path}.png`);
+    }
+    
     private async loadAssets(){
-        await this.loadAsset("player","player");
+        await this.loadSpriteAsset("player","player");
+        await this.loadBasicMtl("brickmap","brickmap");
+        
     }
 }
 

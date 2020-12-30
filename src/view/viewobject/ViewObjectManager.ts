@@ -11,12 +11,14 @@ class ViewObjectManager implements IViewObjectManager{
     constructor(scene:Three.Scene){
         this.scene = scene;
     }
-    ensure(key:string,exists:boolean,factory:()=>IViewObject){
+    ensure(key:string,exists:boolean,factory:()=>IViewObject) : any{
         if(!this.has(key) && exists)
             this.set(key,factory());
         else if(this.has(key) && !exists){
             this.remove(key);
         }
+
+        return this.query(key);
     }
     set(key:string,vobj:IViewObject){
         if(this.has(key))

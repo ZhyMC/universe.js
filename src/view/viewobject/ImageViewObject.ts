@@ -1,5 +1,4 @@
 import * as Three from "three";
-import HTMLImageLoader from "../../utils/HTMLImageLoader";
 import IViewObject from "./IViewObject";
 
 class ImageViewObject implements IViewObject{

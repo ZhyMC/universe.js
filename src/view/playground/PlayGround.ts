@@ -21,6 +21,7 @@ class PlayGround{
         this.camera = new Three.PerspectiveCamera(75,2,0.1,50);
         this.obj_manager.set("camera",new SimpleViewObject(this.camera));
 
+        this.camera.position.set(0,0,5);
 
     }
     getViewObjectManager(){

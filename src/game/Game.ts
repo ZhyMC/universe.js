@@ -12,6 +12,7 @@ import ViewObjectManager from "../view/viewobject/ViewObjectManager";
 import MaterialContainer from "../view/MaterialContainer";
 import DataModel from "../universe/data/DataModel";
 import DbBuilder from "../universe/data/DbBuilder";
+import DataWatcher from "../universe/data/DataWatcher";
 
 class WebGLGame{
     protected commander : CommandManager;
@@ -19,6 +20,7 @@ class WebGLGame{
     protected material_manager : MaterialContainer;
     protected playground : PlayGround;
     protected db : LokiDB = new LokiDB("");
+    protected datawatcher : DataWatcher = new DataWatcher(this.db);
 
     protected inited : boolean = false;
 
@@ -44,8 +46,12 @@ class WebGLGame{
             canvas
         });
     }
+    getPlayGround(){
+        return this.playground;
+    }
     setDataModels(datamodels:DataModel[]){
         this.db = new DbBuilder(datamodels).getDatabase();
+        this.datawatcher = new DataWatcher(this.db);
 
     }
     addCommand(cmd:ICommand){
@@ -73,6 +79,7 @@ class WebGLGame{
     }
     private fixedUpdate(){
         this.controllers.doTick(this.tick++);
+        this.datawatcher.flushWatched();
     }
     private render(){
 

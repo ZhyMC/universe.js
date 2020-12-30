@@ -13,7 +13,9 @@
     <canvas id="canvas" width="900" height="540"></canvas>
     <script src="game.js"></script>
 
-    <script>
+    <script type = "module">
+        import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+
         let canvas = document.querySelector("#canvas");
 
         let game = new Game.default(canvas,"assets");
@@ -22,6 +24,16 @@
             console.log("game loaded");
             game.start();
             game.setRendering(true);
+            let pg = game.getPlayGround();
+
+            let controls = new OrbitControls(pg.getCamera(),canvas);
+            console.log(controls)
+            controls.target.set(0,0,0);
+            setInterval(()=>{
+                controls.update();
+            },10);
+
+            
             console.log("game start");
         })
     </script>

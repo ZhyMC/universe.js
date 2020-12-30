@@ -35,6 +35,9 @@ class SingleModel extends BindedModel{
     find(){
         return super.find.call(this,this.binded_key);
     }
+    set(data:any){
+        return super.set.call(this,this.binded_key,data);
+    }
 }
 
 export default SingleModel;
