@@ -104,15 +104,7 @@ class ChunkViewObject implements IViewObject{
 
     }
     private initAttrs(){
-        for(let dx=0;dx<this.xw;dx++)
-            for(let dz=0;dz<this.zw;dz++)
-                for(let dy=0;dy<this.yw;dy++){
-                  this.setBrickType(dx,dy,dz,0);
-                  
-                }
-        this.geometry.setIndex(this.indexes);
-
-        this.setUpdate();
+        this.setIndexes();
     }
     private getOffset(dx:number,dy:number,dz:number){
         return  dx * this.zw * this.yw + 
@@ -120,11 +112,29 @@ class ChunkViewObject implements IViewObject{
                 dy;
 
     }
+    setIndexes(){
+      for(let offset=0;offset<this.xw*this.yw*this.zw;offset++){
+        let off_indices = ChunkViewObject.indices;
+
+        let ndx_face = 0;
+        let faces = ChunkViewObject.faces;
+        for(let face of faces){
+            let base = (offset*faces.length+ndx_face);
+            for(let i in off_indices){
+              let ind = parseInt(i);
+              this.indexes[base*6+ind] = base*4+off_indices[ind];
+            }
+            ndx_face++;
+        }
+      }
+      this.geometry.setIndex(this.indexes);
+      this.setUpdate();
+  
+    }
     setBrickType(dx:number,dy:number,dz:number,type:number){
         let offset = this.getOffset(dx,dy,dz);
         
-        let off_indices = ChunkViewObject.indices;
-
+      
         let ndx_face = 0;
         let faces = ChunkViewObject.faces;
         for(let {dir,corners} of faces){
@@ -152,11 +162,7 @@ class ChunkViewObject implements IViewObject{
             }
 
 
-            let base = (offset*faces.length+ndx_face);
-            for(let i in off_indices){
-              let ind = parseInt(i);
-              this.indexes[base*6+ind] = base*4+off_indices[ind];
-            }
+         
 
             ndx_face++;
         }
@@ -173,6 +179,7 @@ class ChunkViewObject implements IViewObject{
     setUpdate(){
         this.geometry.attributes.position.needsUpdate = true;
         this.geometry.attributes.normal.needsUpdate = true;
+        this.geometry.attributes.uv.needsUpdate = true;
     }
 
     getObject3D() : Three.Object3D{

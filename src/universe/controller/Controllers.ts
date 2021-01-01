@@ -20,7 +20,12 @@ class Controllers implements IController{
 
         for(let c of this.controllers){
             try{
+                let time_start = new Date().getTime();
                 await c.doTick(tick);
+                let time_end = new Date().getTime();
+                let delta=time_end - time_start;
+                if(delta>10)
+                console.debug("[universe][tick]",c.getName(),delta);
             }catch(err){
                 errs.push(err);
             }

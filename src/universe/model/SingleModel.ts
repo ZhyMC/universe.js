@@ -10,7 +10,13 @@ class SingleModel extends BindedModel{
         this.binded_key = binded_key;
         this._datamodel = datamodel;
     }
+    async bulkAdd(arr : any[]){
+        return super.bulkAdd.call(this,arr.map((x)=>this.fillWithDefault(x)));
+    }
     async add(obj:any = {}){
+        return super.add.call(this,this.fillWithDefault(obj));
+    }
+    private fillWithDefault(obj:any){
         let schema = this._datamodel;
         let data : any = {};
 
@@ -21,10 +27,10 @@ class SingleModel extends BindedModel{
             data[key] = obj[key];
         }
 
-        return super.add.call(this,{
+        return {
             ...data,
             key:this.binded_key
-        })
+        };
     }
     has(){
         return super.has.call(this,this.binded_key);

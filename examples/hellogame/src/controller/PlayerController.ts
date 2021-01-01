@@ -12,14 +12,14 @@ class PlayerController extends Universe.Controller{
         let player = await model.find();
 
         if(this.commander.isActive("a")){
-            model.set({x:player.x-0.1});
+            model.set({x:player.x-1});
         }else if(this.commander.isActive("d")){
-            model.set({x:player.x+0.1});
+            model.set({x:player.x+1});
         }else if(this.commander.isActive("w")){
-            model.set({z:player.z+0.1});
+            model.set({z:player.z+1});
             
         }else if(this.commander.isActive("s")){
-            model.set({z:player.z-0.1});
+            model.set({z:player.z-1});
             
         }
     }

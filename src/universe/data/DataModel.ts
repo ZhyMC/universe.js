@@ -1,3 +1,4 @@
+import DBType from "./db/DBType";
 
 type DataModelProperty = {
     default : any,
@@ -6,6 +7,7 @@ type DataModelProperty = {
 
 type DataModel ={
     name:string,
+    db?:DBType,
     indice?:string[],
     prop:{
         [key:string]:DataModelProperty

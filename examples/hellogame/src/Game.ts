@@ -24,7 +24,7 @@ class Game extends Universe.Game{
     async init(){
         await this.loadAssets();
 
-        this.setDataModels(Object.values(DataModels));
+        this.setDataModels(new Universe.WorkerWebIndexedDB("./worker/indexeddb.worker.js"),Object.values(DataModels));
 
         this.addCommand(new Universe.HTMLCommand("a",this.cmd_ctx));
         this.addCommand(new Universe.HTMLCommand("d",this.cmd_ctx));

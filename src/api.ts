@@ -17,10 +17,14 @@ import ChunkModel from "./map/ChunkModel";
 import ChunkManagerModel from "./map/ChunkManagerModel"
 import ChunkViewObject from "./view/viewobject/ChunkViewObject";
 import IUniverseDB from "./universe/data/db/IUniverseDB";
+import WorkerWebIndexedDB from "./universe/data/db/WorkerIndexedDB";
+import DBType from "./universe/data/db/DBType";
 
 import Game from "./game/Game";
 
 export {
+    DBType,
+    WorkerWebIndexedDB,
     IUniverseDB,
     ChunkViewObject,
     ChunkManagerModel,

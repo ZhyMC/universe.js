@@ -76,7 +76,14 @@ class ChunkModel extends BindedModel{
     unpack(rawdata : Buffer){
         let parser = new ChunkDataParser(this.x,this.z,rawdata);
         parser.parse();
-        parser.unpack(this);
+        
+
+        console.time("unpack");
+        let brick = new BrickModel(this.x*ChunkModel.xw,0,this.z*ChunkModel.zw,this.db);
+        brick.bulkAdd(parser.getChunkData());
+        console.timeEnd("unpack");
+        
+    
     }
 
     static getDataModel() : DataModel{

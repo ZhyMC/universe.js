@@ -1,6 +1,9 @@
 import IUniverseDB, { Change, FindCondition, RowData } from "./IUniverseDB";
 
 class NoDB implements IUniverseDB{
+    async open(){
+        throw new Error("Method not implemented.");
+    }
     createSheet(sheet: string, indexes?: string[], column?: string[]): Promise<void> {
         throw new Error("Method not implemented.");
     }
@@ -10,7 +13,7 @@ class NoDB implements IUniverseDB{
     findOne(sheet: string, condi: RowData): Promise<RowData> {
         throw new Error("Method not implemented.");
     }
-    insert(sheet: string, row: RowData[]): Promise<void> {
+    insertMany(sheet: string, row: RowData[]): Promise<void> {
         throw new Error("Method not implemented.");
     }
     insertOne(sheet: string, rows: RowData): Promise<string> {
@@ -22,13 +25,13 @@ class NoDB implements IUniverseDB{
     findAndUpdate(sheet: string, condi: RowData, delta: RowData): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    getDeltaChanges(sheets?: string[]): Change[] {
+    async getDeltaChanges(sheets?: string[]):Promise<Change[]>{
         throw new Error("Method not implemented.");
     }
     async has(sheet:string,condi:FindCondition) :Promise<boolean>{
         throw new Error("Method not implemented.");
     }
-    clearChanges(): void {
+    async clearChanges(){
         throw new Error("Method not implemented.");
     }
 

@@ -28,6 +28,7 @@ class BrickModel extends BindedModel{
     has(){
         return super.has.call(this,this.getKey());
     }
+    
     add(obj:any){
         return super.add.call(this,{key:this.getKey(),...obj});
     }
@@ -35,6 +36,7 @@ class BrickModel extends BindedModel{
         return super.set.call(this,this.getKey(),data);
     }
     async ensure(data:any){
+
         if(await this.has())
             await this.set(data)
         else

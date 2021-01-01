@@ -18,6 +18,9 @@ class Model extends EventEmitter implements IModel{
     getName(){
         return this.constructor.name;
     }
+    public async bulkAdd(obj:any,datamodel:DataModel) : Promise<void>{
+        return this.db.insertMany(datamodel.name,obj);
+    }
     public async add(obj:any,datamodel:DataModel) : Promise<string>{
         return this.db.insertOne(datamodel.name,obj);
     }

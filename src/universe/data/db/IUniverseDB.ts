@@ -12,16 +12,17 @@ type Change = {
 }
 interface IUniverseDB{
     
+    open(): Promise<void>
     createSheet(sheet:string,indexes?:string[],column?:string[]) : Promise<void>;
     find(sheet:string,condi : FindCondition) : Promise<Array<RowData>>;
     findOne(sheet:string,condi : FindCondition) : Promise<RowData>;
-    insert(sheet:string,row : Array<RowData>) : Promise<void>;
-    insertOne(sheet:string,rows : RowData) : Promise<string>;
+    insertMany(sheet:string,rows : Array<RowData>) : Promise<void>;
+    insertOne(sheet:string,row : RowData) : Promise<string>;
     has(sheet:string,condi : FindCondition) : Promise<boolean>;
     findAndRemove(sheet:string,condi:FindCondition) : Promise<void>;
     findAndUpdate(sheet:string,condi:FindCondition,delta:RowData) : Promise<void>;
-    getDeltaChanges(sheets?:Array<string>) : Array<Change>
-    clearChanges() : void;
+    getDeltaChanges(sheets?:Array<string>) : Promise<Array<Change>>
+    clearChanges() : Promise<void>;
     
 }
 

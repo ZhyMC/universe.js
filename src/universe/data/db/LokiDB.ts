@@ -6,7 +6,9 @@ class LokiDB implements IUniverseDB{
     private db : Loki;
     constructor(){
         this.db = new Loki("universe");
-
+    }
+    async open(){
+        
     }
     async createSheet(sheet:string,indexes:string[] = []){
         this.db.addCollection(sheet,{indices:indexes,unique:indexes,disableChangesApi:false});
@@ -17,8 +19,8 @@ class LokiDB implements IUniverseDB{
     async find(sheet:string,condi:FindCondition){
         return this.db.getCollection(sheet).findOne(condi);
     }
-    async insert(sheet:string,rows:RowData[]){
-        this.db.getCollection(sheet).insert(rows);
+    async insertMany(sheet:string,rows:RowData[]){
+        await this.db.getCollection(sheet).insert(rows);
     }
     async has(sheet:string,condi:FindCondition) : Promise<boolean>{
         if(await this.find(sheet,condi))
@@ -39,7 +41,7 @@ class LokiDB implements IUniverseDB{
             return obj;
         });
     }
-    getDeltaChanges(sheets:string[] = []){
+    async getDeltaChanges(sheets:string[] = []){
         let arr = this.db.generateChangesNotification();
         let all = arr.map((row)=>{
             if(["U","I","D"].indexOf(row.operation)==-1)
@@ -52,8 +54,8 @@ class LokiDB implements IUniverseDB{
         return all.filter((x)=>(sheets.indexOf(x.sheet) != -1))
 
     }
-    clearChanges(){
-        this.db.clearChanges();
+    async clearChanges(){
+        await this.db.clearChanges();
     }
 }
 

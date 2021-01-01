@@ -22,13 +22,10 @@ class ChunkManagerModel extends BindedModel{
             return;
         
         let loader = new ChunkLoader(x,z);
-        let parser = new ChunkDataParser(x,z,loader.getChunkData());
-
         let model = this.getChunk(x,z);
         await model.add({x,z});
-        
-        parser.parse();
-        await parser.unpack(model);
+        await model.unpack(loader.getChunkData());
+
     }
     async unlockChunk(x:number,z:number){
         if(!(await this.isChunkLoaded(x,z)))

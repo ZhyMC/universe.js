@@ -3,6 +3,7 @@ import * as Universe from "universe.js";
 const datamodels : {[key:string] : Universe.DataModel} = {
     Player : {
         name:"Player",
+        db:Universe.DBType.LokiDB,
         prop:{
             health : { default:10 },
             x : { default : 0 },

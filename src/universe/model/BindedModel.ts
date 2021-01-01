@@ -13,6 +13,9 @@ class BindedModel extends Model{
         super(db);
         this.datamodel = datamodel;
     }
+    bulkAdd(obj:any){
+        return super.bulkAdd.call(this,obj,this.datamodel);
+    }
     add<T extends DBModelLine>(obj:T){
         return super.add.call(this,obj,this.datamodel);
     }

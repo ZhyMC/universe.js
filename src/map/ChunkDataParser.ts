@@ -1,5 +1,6 @@
 import { Buffer } from "buffer";
-import { BrickBinaryData } from "./BrickModel"
+import Model from "../universe/model/Model";
+import BrickModel, { BrickBinaryData } from "./BrickModel"
 import ChunkModel from "./ChunkModel";
 
 class ChunkDataParser{
@@ -23,7 +24,8 @@ class ChunkDataParser{
         return {x:this.x * ChunkModel.xw + x,y:y,z:this.z*ChunkModel.zw+z};
     }
     parse(){
-        for(let times = 0;this.offset<this.buffer.length; times++){
+        let sum = ChunkModel.xw*ChunkModel.yw*ChunkModel.zw;
+        for(let times = 0;times<sum; times++){
             let data : BrickBinaryData = {
                 ...this.getXYZByIndex(times),
                 chunkx:this.x,
@@ -46,14 +48,7 @@ class ChunkDataParser{
     getChunkData() : BrickBinaryData[]{
         return this.chunkdata;
     }
-    async unpack(chunk:ChunkModel){
 
-        let bricks = chunk.getBricks();
-        for(let i in bricks)
-            await bricks[i].ensure(this.chunkdata[i]);
-        
-        
-    }
 
 }
 

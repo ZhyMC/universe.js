@@ -7,7 +7,8 @@ class PlayerView extends Universe.ViewController{
     
     }
     async doTick(){
-        for(let change of this.db.getDeltaChanges(["Player"])){
+        let changes = await this.db.getDeltaChanges(["Player"]);
+        for(let change of changes){
 
             let model = new PlayerModel(this.db);
             this.viewobj.ensure("player",await model.has(),()=>new Universe.ImageViewObject());

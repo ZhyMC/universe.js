@@ -1,4 +1,3 @@
-import assert from "assert";
 import ICommand from "./ICommand";
 import ICommandManager from "./ICommandManager";
 
@@ -11,7 +10,8 @@ class CommandManager implements ICommandManager{
         this.cmds.set(cmd.getCommand(),cmd);
     }
     isActive(cmd:string){
-        assert(this.cmds.has(cmd),"this command can not find");
+        if(!this.cmds.has(cmd))
+            throw new Error("this command can not find");
 
         return (this.cmds.get(cmd) as ICommand).isActive();
     }
