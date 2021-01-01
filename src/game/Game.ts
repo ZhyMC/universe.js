@@ -5,22 +5,24 @@ import ICommand from "../universe/command/ICommand";
 
 import PlayGround from "../view/playground/PlayGround";
 import * as Three from "three";
-import LokiDB from "lokijs";
 import IModel from "../universe/model/IModel";
 import IViewObjectManager from "../view/viewobject/IViewObjectManager";
 import ViewObjectManager from "../view/viewobject/ViewObjectManager";
 import MaterialContainer from "../view/MaterialContainer";
 import DataModel from "../universe/data/DataModel";
 import DbBuilder from "../universe/data/DbBuilder";
-import DataWatcher from "../universe/data/DataWatcher";
+import IUniverseDB from "../universe/data/db/IUniverseDB";
+import NoDB from "../universe/data/db/NoDB";
+import LokiDB from "../universe/data/db/LokiDB";
+
+const sleep = (time:number)=>new Promise((resolve)=>setTimeout(resolve,time));
 
 class WebGLGame{
     protected commander : CommandManager;
     protected viewobj_manager : IViewObjectManager;
     protected material_manager : MaterialContainer;
     protected playground : PlayGround;
-    protected db : LokiDB = new LokiDB("");
-    protected datawatcher : DataWatcher = new DataWatcher(this.db);
+    protected db : IUniverseDB = new NoDB();
 
     protected inited : boolean = false;
 
@@ -50,8 +52,7 @@ class WebGLGame{
         return this.playground;
     }
     setDataModels(datamodels:DataModel[]){
-        this.db = new DbBuilder(datamodels).getDatabase();
-        this.datawatcher = new DataWatcher(this.db);
+        this.db = new DbBuilder(new LokiDB(),datamodels).getDatabase();
 
     }
     addCommand(cmd:ICommand){
@@ -75,11 +76,18 @@ class WebGLGame{
         this.alive = true;
         this.controllers.start();
         this.next_render_loop();
-        this.fixed_loop_handler = setInterval(this.fixedUpdate.bind(this),50) as any;
+        this.fixed_loop();
     }
-    private fixedUpdate(){
-        this.controllers.doTick(this.tick++);
-        this.datawatcher.flushWatched();
+    private async fixed_loop(){
+        while(this.alive){
+
+            await this.fixedUpdate();
+            await sleep(50);
+        }
+    }
+    private async fixedUpdate(){
+        await this.controllers.doTick(this.tick++);
+        this.db.clearChanges();
     }
     private render(){
 
@@ -94,7 +102,6 @@ class WebGLGame{
     }
 
     close(){
-        clearInterval(this.fixed_loop_handler);
         this.alive = false;
     }
 

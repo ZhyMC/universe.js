@@ -46,11 +46,11 @@ class ChunkDataParser{
     getChunkData() : BrickBinaryData[]{
         return this.chunkdata;
     }
-    unpack(chunk:ChunkModel){
+    async unpack(chunk:ChunkModel){
 
         let bricks = chunk.getBricks();
         for(let i in bricks)
-            bricks[i].ensure(this.chunkdata[i]);
+            await bricks[i].ensure(this.chunkdata[i]);
         
         
     }

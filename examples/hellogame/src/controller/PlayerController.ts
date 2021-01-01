@@ -2,14 +2,14 @@ import * as Universe from "universe.js";
 import PlayerModel from "../model/PlayerModel";
 
 class PlayerController extends Universe.Controller{
-    start(){
+    async start(){
         let model = new PlayerModel(this.db);
         model.add();
     }
-    doTick(tick:number){
+    async doTick(tick:number){
         let model = new PlayerModel(this.db);
-        if(!model.has())return;
-        let player = model.find();
+        if(!(await model.has()))return;
+        let player = await model.find();
 
         if(this.commander.isActive("a")){
             model.set({x:player.x-0.1});

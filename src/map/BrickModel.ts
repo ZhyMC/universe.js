@@ -1,14 +1,14 @@
 import LokiDB from "lokijs";
 import DataModel from "../universe/data/DataModel";
 import BindedModel from "../universe/model/BindedModel";
-import {Buffer} from "buffer";
+import IUniverseDB from "../universe/data/db/IUniverseDB";
 
 class BrickModel extends BindedModel{
     static pack_length : number = 2;
     private x:number;
     private y:number;
     private z:number;
-    constructor(x:number,y:number,z:number,db: LokiDB){
+    constructor(x:number,y:number,z:number,db: IUniverseDB){
         super(BrickModel.getDataModel(),db);
         this.x=x;
         this.y=y;
@@ -18,7 +18,7 @@ class BrickModel extends BindedModel{
     getKey(){
         return `brick.${this.x}.${this.y}.${this.z}`;
     }
-    static fromKey(key:string,db:LokiDB){
+    static fromKey(key:string,db:IUniverseDB){
         let [p,x,y,z]=key.split(".").map((v)=>parseInt(v));
         return new BrickModel(x,y,z,db);
     }
@@ -34,11 +34,11 @@ class BrickModel extends BindedModel{
     set(data:any){
         return super.set.call(this,this.getKey(),data);
     }
-    ensure(data:any){
-        if(this.has())
-            this.set(data)
+    async ensure(data:any){
+        if(await this.has())
+            await this.set(data)
         else
-            this.add(data);
+            await this.add(data);
     }
     
     static getDataModel() : DataModel{

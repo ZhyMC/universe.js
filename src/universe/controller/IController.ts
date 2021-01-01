@@ -1,6 +1,6 @@
 interface IController{
     getName() : string;
-    start() : void;
-    doTick(tick:number) : void;
+    start() : Promise<void>;
+    doTick(tick:number) : Promise<void>;
 }
 export default IController;

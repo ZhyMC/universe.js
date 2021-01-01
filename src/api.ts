@@ -16,12 +16,12 @@ import BrickModel from "./map/BrickModel";
 import ChunkModel from "./map/ChunkModel";
 import ChunkManagerModel from "./map/ChunkManagerModel"
 import ChunkViewObject from "./view/viewobject/ChunkViewObject";
-import DataWatcher from "./universe/data/DataWatcher";
+import IUniverseDB from "./universe/data/db/IUniverseDB";
 
 import Game from "./game/Game";
 
 export {
-    DataWatcher,
+    IUniverseDB,
     ChunkViewObject,
     ChunkManagerModel,
     SingleModel,

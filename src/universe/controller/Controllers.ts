@@ -11,20 +11,20 @@ class Controllers implements IController{
     getName(){
         return "ControllerManager";
     }
-    start(){
-        this.controllers.forEach((c)=>{
-            c.start();
-        })
+    async start(){
+        for(let c of this.controllers)
+            await c.start();
     }
-    doTick(tick:number){
+    async doTick(tick:number){
         let errs : any[] = [];
-        this.controllers.forEach((c)=>{
+
+        for(let c of this.controllers){
             try{
-                c.doTick(tick);
+                await c.doTick(tick);
             }catch(err){
                 errs.push(err);
             }
-        });
+        }
     
         errs.forEach((err)=>{
             throw err;

@@ -1,16 +1,16 @@
 import BindedModel from "./BindedModel";
-import LokiDB from "lokijs";
 import DataModel from "../data/DataModel";
+import IUniverseDB from "../data/db/IUniverseDB";
 
 class SingleModel extends BindedModel{
     private binded_key : string;
     private _datamodel : DataModel;
-    constructor(binded_key:string,datamodel:DataModel,db:LokiDB){
+    constructor(binded_key:string,datamodel:DataModel,db:IUniverseDB){
         super(datamodel,db);
         this.binded_key = binded_key;
         this._datamodel = datamodel;
     }
-    add(obj:any = {}){
+    async add(obj:any = {}){
         let schema = this._datamodel;
         let data : any = {};
 
@@ -26,10 +26,10 @@ class SingleModel extends BindedModel{
             key:this.binded_key
         })
     }
-    has():boolean{
+    has(){
         return super.has.call(this,this.binded_key);
     }
-    remove():void{
+    remove(){
         return super.remove.call(this,this.binded_key);
     }
     find(){

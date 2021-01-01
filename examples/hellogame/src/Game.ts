@@ -34,8 +34,8 @@ class Game extends Universe.Game{
         this.addController(this.cmd_ctx);
         this.addController(new PlayerController(this.commander,this.db));
         this.addController(new MaploadController(this.commander,this.db));
-        this.addController(new PlayerView(this.viewobj_manager,this.material_manager,this.datawatcher));
-        this.addController(new BrickView(this.viewobj_manager,this.material_manager,this.datawatcher));
+        this.addController(new PlayerView(this.viewobj_manager,this.material_manager,this.db));
+        this.addController(new BrickView(this.viewobj_manager,this.material_manager,this.db));
         this.inited = true;
     }
     private loadSpriteAsset(path:string,key:string){

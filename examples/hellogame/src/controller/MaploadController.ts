@@ -4,14 +4,15 @@ import PlayerModel from "../model/PlayerModel";
 
 
 class MaploadController extends Universe.Controller{
-    start(){
+    async start(){
 
     }
-    doTick(){
+    async doTick(){
         let manager = new Universe.ChunkManagerModel(this.db);
         let player = new PlayerModel(this.db);
-        let chunkxz = player.getChunkXZ();
-        manager.loadChunk(chunkxz.x,chunkxz.z);
+        let chunkxz = await player.getChunkXZ();
+        
+        await manager.loadChunk(chunkxz.x,chunkxz.z);
 
         
     }

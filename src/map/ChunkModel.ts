@@ -1,11 +1,9 @@
 import DataModel from "../universe/data/DataModel";
 import BindedModel from "../universe/model/BindedModel";
 import BrickModel from "../map/BrickModel";
-import LokiDB from "lokijs";
 import ChunkDataBuilder from "./ChunkDataBuilder";
 import ChunkDataParser from "./ChunkDataParser";
-
-import { Buffer } from "buffer";
+import IUniverseDB from "../universe/data/db/IUniverseDB";
 
 class ChunkModel extends BindedModel{
     static xw: number = 16;
@@ -14,7 +12,7 @@ class ChunkModel extends BindedModel{
 
     private x:number;
     private z:number;
-    constructor(x:number,z:number,db:LokiDB){
+    constructor(x:number,z:number,db:IUniverseDB){
         super(ChunkModel.getDataModel(),db);
         this.x=x;
         this.z=z;
@@ -31,11 +29,9 @@ class ChunkModel extends BindedModel{
     has(){
         return super.has.call(this,this.getKey());  
     }
-
     remove(){
         super.remove.call(this,this.getKey());
-        let coll = this.db.getCollection(BrickModel.getDataModel().name);
-        coll.findAndRemove({chunkx:this.x,chunkz:this.z});
+        return this.db.findAndRemove(BrickModel.getDataModel().name,{chunkx:this.x,chunkz:this.z});
     }
     getBrickLocation(index_x:number,index_z:number,index_y:number){
         return {
@@ -44,9 +40,9 @@ class ChunkModel extends BindedModel{
             z:this.z*ChunkModel.yw+index_z,
         }
     }
-    getChunks(){
+    async getChunks(){
         let coll = ChunkModel.getDataModel().name;
-        return this.db.getCollection(coll).find().map((chunkdata)=>{
+        return (await this.db.find(coll,{})).map((chunkdata)=>{
             return new ChunkModel(chunkdata.x,chunkdata.z,this.db);
         })
 

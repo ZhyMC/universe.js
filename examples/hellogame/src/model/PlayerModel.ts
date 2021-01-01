@@ -1,18 +1,17 @@
 import * as Universe from "universe.js";
 import * as Three from "three"
-import LokiDB from "lokijs";
 import DataModels from "../data/DataModels";
 
 class PlayerModel extends Universe.SingleModel{
-    constructor(db:LokiDB){
+    constructor(db:Universe.IUniverseDB){
         super("player",DataModels.Player,db);
     }
-    getPosition(){
-        let obj = this.find();
+    async getPosition(){
+        let obj = await this.find();
         return new Three.Vector3(obj.x,obj.y,obj.z);
     }
-    getChunkXZ(){
-        let pos = this.getPosition();
+    async getChunkXZ(){
+        let pos = await this.getPosition();
         return Universe.ChunkModel.getChunkXZ(pos.x,pos.z);
     }
     

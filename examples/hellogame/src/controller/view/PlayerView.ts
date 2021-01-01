@@ -3,21 +3,22 @@ import PlayerModel from "../../model/PlayerModel";
 
 class PlayerView extends Universe.ViewController{
 
-    start(){
+    async start(){
     
     }
-    doTick(){
-        this.watcher.getWatched(["Player"]).map(()=>{
+    async doTick(){
+        for(let change of this.db.getDeltaChanges(["Player"])){
+
             let model = new PlayerModel(this.db);
-            this.viewobj.ensure("player",model.has(),()=>new Universe.ImageViewObject());
+            this.viewobj.ensure("player",await model.has(),()=>new Universe.ImageViewObject());
             if(!model.has())return;
             let player = this.viewobj.query("player") as Universe.ImageViewObject;
             player.setImageMtl(this.mtl.getSpriteMtl("player"));
     
-            let pos = model.getPosition();
+            let pos = await model.getPosition();
             player.getObject3D().position.set(pos.x,pos.y,pos.z);
         
-        })
+        };
         
 
         

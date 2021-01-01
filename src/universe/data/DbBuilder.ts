@@ -1,18 +1,20 @@
 import LokiDB from "lokijs";
 import DataModel from "./DataModel";
+import IUniverseDB from "./db/IUniverseDB";
 
 
 class DbBuilder{
-    private db : LokiDB;
+    private db : IUniverseDB;
     private models : DataModel[];
-    constructor(datamodels : DataModel[]){
-        this.db = new LokiDB("game");
+    constructor(db : IUniverseDB,datamodels : DataModel[]){
+        this.db = db;
+        
         this.models = datamodels;
         this.initCollections();
     }
     private initCollections(){
         this.models.forEach((model)=>{
-            this.db.addCollection(model.name,{indices:model.indice || [],disableChangesApi:false});
+            this.db.createSheet(model.name,["key"],Object.keys(model.prop));
         });
     }
     getDatabase(){

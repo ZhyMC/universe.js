@@ -1,6 +1,7 @@
 import Model from "./Model";
 import LokiDB from "lokijs";
 import DataModel from "../data/DataModel";
+import IUniverseDB from "../data/db/IUniverseDB";
 
 type DBModelLine = {
     key:string,
@@ -8,14 +9,14 @@ type DBModelLine = {
 class BindedModel extends Model{
 
     private datamodel:DataModel;
-    constructor(datamodel:DataModel,db:LokiDB){
+    constructor(datamodel:DataModel,db:IUniverseDB){
         super(db);
         this.datamodel = datamodel;
     }
-    add<T extends DBModelLine>(obj:T) : number{
+    add<T extends DBModelLine>(obj:T){
         return super.add.call(this,obj,this.datamodel);
     }
-    has(key:string):boolean{
+    has(key:string){
         return super.has.call(this,key,this.datamodel);
     }
     remove(key:string){

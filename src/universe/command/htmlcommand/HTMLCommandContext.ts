@@ -31,10 +31,10 @@ class HTMLCommandContext implements IController{
     getName(){
         return "HTMLCommandContext";
     }
-    start(){
+    async start(){
 
     }
-    doTick(){
+    async doTick(){
         this.keymap.forEach((v,k)=>{
             let is = this.isKey(k);
             this.fixed_map.set(k,is);

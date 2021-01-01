@@ -17,8 +17,8 @@ class ChunkDataBuilder{
         this.len = xw*zw*yw*2;
         this.data = Buffer.allocUnsafe(this.len);
     }
-    addBrick(brick:BrickModel){
-        let data = brick.find();
+    async addBrick(brick:BrickModel){
+        let data = await brick.find();
 
         this.addBrickData(data);
     }

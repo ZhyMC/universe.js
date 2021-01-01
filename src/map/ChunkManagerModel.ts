@@ -2,11 +2,11 @@ import BindedModel from "../universe/model/BindedModel";
 import ChunkDataParser from "./ChunkDataParser";
 import ChunkLoader from "./ChunkLoader";
 import ChunkModel from "./ChunkModel";
-import LokiDB from "lokijs";
+import IUniverseDB from "../universe/data/db/IUniverseDB";
 
 class ChunkManagerModel extends BindedModel{
     
-    constructor(db:LokiDB){
+    constructor(db:IUniverseDB){
         super(ChunkModel.getDataModel(),db);
     }
     
@@ -17,24 +17,24 @@ class ChunkManagerModel extends BindedModel{
         let model = this.getChunk(x,z);
         return model.has();
     }
-    loadChunk(x:number,z:number){
-        if(this.isChunkLoaded(x,z))
+    async loadChunk(x:number,z:number){
+        if(await this.isChunkLoaded(x,z))
             return;
         
         let loader = new ChunkLoader(x,z);
         let parser = new ChunkDataParser(x,z,loader.getChunkData());
 
         let model = this.getChunk(x,z);
-        model.add({x,z});
+        await model.add({x,z});
         
         parser.parse();
-        parser.unpack(model);
+        await parser.unpack(model);
     }
-    unlockChunk(x:number,z:number){
-        if(!this.isChunkLoaded(x,z))
+    async unlockChunk(x:number,z:number){
+        if(!(await this.isChunkLoaded(x,z)))
             return;
         let model = this.getChunk(x,z);
-        model.remove();
+        await model.remove();
     }
 
 }
