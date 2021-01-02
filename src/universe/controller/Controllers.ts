@@ -2,11 +2,19 @@ import IController from "./IController";
 
 class Controllers implements IController{
     private controllers : IController[] = [];
+    private isAsyncs = new Map<IController,boolean>();
     constructor(){
         
     }
     addController(controller : IController){
         this.controllers.push(controller);
+    }
+  
+
+    private isAsync(controller:IController){
+        if(!this.isAsyncs.has(controller))
+            return false;
+        return this.isAsyncs.get(controller) as boolean;
     }
     getName(){
         return "ControllerManager";
@@ -17,11 +25,15 @@ class Controllers implements IController{
     }
     async doTick(tick:number){
         let errs : any[] = [];
-
+        let asyncs : IController[] = [];
         for(let c of this.controllers){
             try{
                 let time_start = new Date().getTime();
-                await c.doTick(tick);
+                if(this.isAsync(c))
+                    asyncs.push(c);
+                else
+                    await c.doTick(tick);
+
                 let time_end = new Date().getTime();
                 let delta=time_end - time_start;
                 if(delta>10)
@@ -30,6 +42,7 @@ class Controllers implements IController{
                 errs.push(err);
             }
         }
+        await Promise.all(asyncs.map(a=>a.doTick(tick)));
     
         errs.forEach((err)=>{
             throw err;

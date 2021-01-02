@@ -6,14 +6,6 @@ const path = require("path");
 
 async function build(){
 
-    try{
-        await fs.copy(path.join(__dirname,"../../worker"),path.join(__dirname,"./worker"),{
-            overwrite: true,
-        });
-    }catch(err){
-
-    }
-
     browserify(path.join(__dirname,"./src/Game.ts"),{standalone:"Game"})
         .plugin(tsify)
         .bundle()

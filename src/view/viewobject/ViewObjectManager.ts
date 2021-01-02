@@ -11,22 +11,25 @@ class ViewObjectManager implements IViewObjectManager{
     constructor(scene:Three.Scene){
         this.scene = scene;
     }
-    ensure(key:string,exists:boolean,factory:()=>IViewObject) : any{
-        if(!this.has(key) && exists)
-            this.set(key,factory());
-        else if(this.has(key) && !exists){
+    async ensure(key:string,exists:boolean,factory:()=>Promise<IViewObject> | IViewObject) : Promise<any>{
+        let val = this.vobjs.get(key)
+
+        if(exists && !val){
+            let ins = await factory();
+            this.set(key,ins); 
+            return ins;   
+        }else if(!exists && val){
             this.remove(key);
+        }else{
+            return val as IViewObject;
         }
 
-        return this.query(key);
     }
     set(key:string,vobj:IViewObject){
-        if(this.has(key))
-            this.remove(key);
-        
-        this.vobjs.set(key,vobj);
+        if(!this.has(key))
+            this.scene.add(vobj.getObject3D());
 
-        this.scene.add(vobj.getObject3D());
+        this.vobjs.set(key,vobj);
         this.keymap.set(vobj,key);
     }
     remove(key:string):void{

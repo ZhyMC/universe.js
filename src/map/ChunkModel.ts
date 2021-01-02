@@ -4,11 +4,12 @@ import BrickModel from "../map/BrickModel";
 import ChunkDataBuilder from "./ChunkDataBuilder";
 import ChunkDataParser from "./ChunkDataParser";
 import IUniverseDB from "../universe/data/db/IUniverseDB";
+import DBType from "../universe/data/db/DBType";
 
 class ChunkModel extends BindedModel{
     static xw: number = 16;
     static zw: number = 16;
-    static yw: number = 32;
+    static yw: number = 1;
 
     private x:number;
     private z:number;
@@ -77,11 +78,8 @@ class ChunkModel extends BindedModel{
         let parser = new ChunkDataParser(this.x,this.z,rawdata);
         parser.parse();
         
-
-        console.time("unpack");
         let brick = new BrickModel(this.x*ChunkModel.xw,0,this.z*ChunkModel.zw,this.db);
         brick.bulkAdd(parser.getChunkData());
-        console.timeEnd("unpack");
         
     
     }

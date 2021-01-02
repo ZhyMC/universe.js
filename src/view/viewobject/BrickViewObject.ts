@@ -11,7 +11,10 @@ class BrickViewObject implements IViewObject{
         this.brick = BrickViewObject.geometry;
         this.obj = new Three.Mesh(this.brick);
     }
-    setImageMtl(mtl:Three.MeshBasicMaterial){
+    async load(){
+
+    }
+    setImageMtl(mtl:Three.MeshStandardMaterial){
         this.obj.material = [mtl,mtl,mtl,mtl,mtl,mtl];
     }
     getObject3D() : Three.Object3D{

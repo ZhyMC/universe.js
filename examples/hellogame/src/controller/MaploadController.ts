@@ -12,7 +12,7 @@ class MaploadController extends Universe.Controller{
         let player = new PlayerModel(this.db);
         let chunkxz = await player.getChunkXZ();
         
-        manager.loadChunk(chunkxz.x,chunkxz.z);
+        await manager.loadChunk(chunkxz.x,chunkxz.z);
 
         
     }

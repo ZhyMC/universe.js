@@ -1,5 +1,6 @@
 import RPCWorker from "../../../utils/RPCWorker";
 import IUniverseDB, { Change, RowData } from "./IUniverseDB";
+import IndexedDBWorker from "../../../worker/dist/indexeddb.worker";
 
 class WorkerWebIndexedDB implements IUniverseDB{
     private worker : RPCWorker;
@@ -7,7 +8,7 @@ class WorkerWebIndexedDB implements IUniverseDB{
     private changes : Change[] = [];
 
     constructor(worker_url:string){
-        this.worker = new RPCWorker(worker_url);
+        this.worker = new RPCWorker(new Worker(URL.createObjectURL(new Blob([IndexedDBWorker]))));
     }
     async open() : Promise<void>{
         return this.worker.send("open");

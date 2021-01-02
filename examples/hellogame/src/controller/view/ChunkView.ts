@@ -15,8 +15,10 @@ class ChunkView extends Universe.ViewController{
         });
         
         for(let chunk of changed){
-            this.viewobj.ensure(chunk.getKey(),await chunk.has(),()=>{
-                return new ChunkViewObject(this.mtl.getBasicMtl("brickmap"));
+            await this.viewobj.ensure(chunk.getKey(),await chunk.has(),async ()=>{
+                let obj = new ChunkViewObject(this.mtl.getBasicMtl("brickmap"));
+                await obj.load();
+                return obj;
             });
         }
 
@@ -24,6 +26,7 @@ class ChunkView extends Universe.ViewController{
     private async doBricksTick(){
         let changes = await this.db.getDeltaChanges(["Brick"]);
 
+        let viewobjs = new Set<ChunkViewObject>();
         for(let {row} of changes){
 
 //            console.log(row,x*Universe.ChunkModel.xw,0,z*Universe.ChunkModel.zw);
@@ -37,9 +40,11 @@ class ChunkView extends Universe.ViewController{
 
             vobj.getObject3D().position.set(x*ChunkModel.xw,0,z*ChunkModel.zw);
             vobj.setBrickType(row.x-x*ChunkModel.xw,row.y,row.z-z*ChunkModel.zw,Math.floor(Math.random()*16));    
-        
-
+            viewobjs.add(vobj);
         }
+        viewobjs.forEach((obj)=>{
+            obj.setUVUpdate();
+        })
 
     }
     async doTick(){

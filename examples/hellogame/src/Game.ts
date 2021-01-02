@@ -1,13 +1,15 @@
 import * as Universe from "universe.js";
 
 import PlayerView from "./controller/view/PlayerView";
-import BrickView from "./controller/view/ChunkView";
+import ChunkView from "./controller/view/ChunkView";
 
 import PlayerController from "./controller/PlayerController";
 import MaploadController from "./controller/MaploadController";
+import CameraView from "./controller/view/CameraView";
+
 
 import DataModels from "./data/DataModels";
-
+import DBConfig from "./data/DBConfig";
 
 
 class Game extends Universe.Game{
@@ -24,7 +26,7 @@ class Game extends Universe.Game{
     async init(){
         await this.loadAssets();
 
-        this.setDataModels(new Universe.WorkerWebIndexedDB("./worker/indexeddb.worker.js"),Object.values(DataModels));
+        this.setDataModels(DBConfig,Object.values(DataModels));
 
         this.addCommand(new Universe.HTMLCommand("a",this.cmd_ctx));
         this.addCommand(new Universe.HTMLCommand("d",this.cmd_ctx));
@@ -34,8 +36,10 @@ class Game extends Universe.Game{
         this.addController(this.cmd_ctx);
         this.addController(new PlayerController(this.commander,this.db));
         this.addController(new MaploadController(this.commander,this.db));
+        this.addController(new CameraView(this.viewobj_manager,this.material_manager,this.db));
         this.addController(new PlayerView(this.viewobj_manager,this.material_manager,this.db));
-        this.addController(new BrickView(this.viewobj_manager,this.material_manager,this.db));
+        this.addController(new ChunkView(this.viewobj_manager,this.material_manager,this.db));
+        
         this.inited = true;
     }
     private loadSpriteAsset(path:string,key:string){

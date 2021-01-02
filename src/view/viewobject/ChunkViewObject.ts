@@ -1,14 +1,9 @@
 import * as Three from "three";
 import IViewObject from "./IViewObject";
 import ChunkModel from "../../map/ChunkModel";
-import Model from "../../universe/model/Model";
+import RPCWorker from "../../utils/RPCWorker";
 
 class ChunkViewObject implements IViewObject{
-    static points = 4;
-    static indices = [
-        0,1,2,
-        2,1,3
-    ];
     static faces = [
       { // left
         dir: [ -1,  0,  0, ],
@@ -65,110 +60,123 @@ class ChunkViewObject implements IViewObject{
         ],
       },
     ];
-    private uvs;
-    private positions;
-    private normals;
-    private indexes;
-
+    static initedGeometry = ChunkViewObject.getInitedGeometry();
     private geometry;
     private tileWidth = 16;
     private tileTextureWidth = 256;
     private tileTextureHeight = 64;
 
-    private xw = ChunkModel.xw;
-    private yw = ChunkModel.yw;
-    private zw = ChunkModel.zw;
-    
     private mesh : Three.Mesh;
 
     constructor(bricks_material:Three.Material){
-        let len = this.xw*this.yw*this.zw;
-        let points = ChunkViewObject.points;
-        let faces = ChunkViewObject.faces.length;
-
-
-        this.uvs = new Float32Array(len*2*points*faces);
-        this.positions = new Float32Array(len*3*points*faces);
-        this.normals = new Float32Array(len*3*points*faces);
-        this.indexes = new Array<number>(len*6*faces)
-
-        this.geometry = new Three.BufferGeometry();
-
-        this.geometry.setAttribute("position",new Three.BufferAttribute(this.positions,3));
-        this.geometry.setAttribute("normal",new Three.BufferAttribute(this.normals,3));
-        this.geometry.setAttribute("uv",new Three.BufferAttribute(this.uvs,2));
-
-        this.initAttrs();
+        this.geometry = ChunkViewObject.initedGeometry.clone();
 
         this.mesh = new Three.Mesh(this.geometry,bricks_material);
 
     }
-    private initAttrs(){
-        this.setIndexes();
+  
+    static getOffset(dx:number,dy:number,dz:number,xw:number,yw:number,zw:number){
+      return  dx * zw * yw + 
+              dz * yw + 
+              dy;
+    }
+    static getInitedGeometry(){
+      let {positions,normals,indexes} = ChunkViewObject.getInitedAttrs(ChunkModel.xw,ChunkModel.yw,ChunkModel.zw);
+
+      let len = ChunkModel.xw*ChunkModel.yw*ChunkModel.zw;
+      let points = 4;
+      let faces = 6;
+
+      let geometry = new Three.BufferGeometry();
+      geometry.setAttribute("position",new Three.BufferAttribute(positions,3));
+      geometry.setAttribute("normal",new Three.BufferAttribute(normals,3));
+      geometry.setAttribute("uv",new Three.BufferAttribute(new Float32Array(len*2*points*faces),2));
+
+      geometry.setIndex(indexes);
+      
+      return geometry;
+
+    }
+    static getInitedAttrs(xw:number,yw:number,zw:number){
+      let len = xw*yw*zw;
+      let positions = new Float32Array(len*3*4*6);
+      let normals = new Float32Array(len*3*4*6);
+      let indexes = new Array(len*6*6);
+    
+        const indices = [
+            0,1,2,
+            2,1,3
+        ];
+        let faces = ChunkViewObject.faces;
+        for(let dx=0;dx<xw;dx++)
+            for(let dy=0;dy<yw;dy++)
+                for(let dz=0;dz<zw;dz++){
+                    let offset = ChunkViewObject.getOffset(dx,dy,dz,xw,yw,zw);
+                    let off_indices = indices;
+            
+                    let ndx_face = 0;
+                    for(let {dir,corners} of faces){
+            
+                        let ndx_corner = 0;
+                            
+                        for(let {pos,uv} of corners){
+            
+                            let base = (offset*faces.length + ndx_face) *corners.length  + ndx_corner;
+                            normals.set(dir,base*3);
+                            positions.set([dx+pos[0],dy+pos[1],dz+pos[2]],base*3);
+            
+                            ndx_corner = ndx_corner + 1;
+                        };
+            
+                        let base = (offset*faces.length+ndx_face);
+                        for(let i in off_indices){
+                            let ind = parseInt(i);
+                            indexes[base*6+ind] = base*4+off_indices[ind];
+                        }
+                        ndx_face++;
+                    }
+            }
+
+        return {positions,normals,indexes};
+    }
+    async load(){
+
     }
     private getOffset(dx:number,dy:number,dz:number){
-        return  dx * this.zw * this.yw + 
-                dz * this.yw + 
+        return  dx * ChunkModel.zw * ChunkModel.yw + 
+                dz * ChunkModel.yw + 
                 dy;
 
     }
-    setIndexes(){
-      for(let offset=0;offset<this.xw*this.yw*this.zw;offset++){
-        let off_indices = ChunkViewObject.indices;
 
-        let ndx_face = 0;
-        let faces = ChunkViewObject.faces;
-        for(let face of faces){
-            let base = (offset*faces.length+ndx_face);
-            for(let i in off_indices){
-              let ind = parseInt(i);
-              this.indexes[base*6+ind] = base*4+off_indices[ind];
-            }
-            ndx_face++;
-        }
-      }
-      this.geometry.setIndex(this.indexes);
-      this.setUpdate();
-  
-    }
     setBrickType(dx:number,dy:number,dz:number,type:number){
         let offset = this.getOffset(dx,dy,dz);
-        
-      
+
         let ndx_face = 0;
         let faces = ChunkViewObject.faces;
         for(let {dir,corners} of faces){
-          
+           if(ndx_face!=3){
+             ndx_face++;
+             continue;
+            }
+                
             let ndx_corner = 0;
             
             for(let {pos,uv} of corners){
-
-                let base = (offset*faces.length + ndx_face) *corners.length  + ndx_corner;
-                this.normals.set(dir,base*3);
-                this.positions.set([dx+pos[0],dy+pos[1],dz+pos[2]],base*3);
                 
-                this.uvs.set([
+                let base = (offset*faces.length + ndx_face) *corners.length  + ndx_corner;
+
+                (this.geometry.attributes.uv.array as Float32Array).set([
                     (type + uv[0]) * this.tileWidth / this.tileTextureWidth,
                     1 + (uv[1] - 1 ) * this.tileWidth / this.tileTextureHeight,
                 ],base*2);
-//                console.log(1 + (uv[1] - 1 ) * this.tileWidth / this.tileTextureWidth)
-
-                if(type == 0){
-                  this.positions.set([dx,dx,dx],base*3);
-                  this.setPosUpdate();
-                }
               
                 ndx_corner = ndx_corner + 1;
             }
 
-
-         
-
             ndx_face++;
         }
 
-
-        this.setUVUpdate();
     }
     setPosUpdate(){
         this.geometry.attributes.position.needsUpdate = true;

@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./scripts/compile.js",
+    "build-worker": "node ./scripts/compile-workers.js",
     "ce": "node ./scripts/dev-compile-examples.js & http-server ./examples/hellogame -c-1"
   },
   "keywords": [],
@@ -19,6 +20,7 @@
     "mousetrap": "^1.6.5",
     "three": "^0.123.0",
     "tsify": "^5.0.2",
+    "worker-inlinify": "^1.1.3",
     "worker-loader": "^3.0.7"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "fs-extra": "^9.0.1",
     "recursive-copy": "^2.0.11",
+    "text2jsvar": "^1.2.1",
     "ts-loader": "^8.0.13",
     "typescript": "^4.1.3",
     "webpack": "^5.11.1",

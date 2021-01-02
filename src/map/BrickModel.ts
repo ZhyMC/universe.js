@@ -2,6 +2,7 @@ import LokiDB from "lokijs";
 import DataModel from "../universe/data/DataModel";
 import BindedModel from "../universe/model/BindedModel";
 import IUniverseDB from "../universe/data/db/IUniverseDB";
+import DBType from "../universe/data/db/DBType";
 
 class BrickModel extends BindedModel{
     static pack_length : number = 2;
@@ -47,6 +48,7 @@ class BrickModel extends BindedModel{
 
         return {
             name:"Brick",
+            db:DBType.IndexedDB,
             prop:{
                 "type":{ default : 0 },
                 "x" : { default : 0 },

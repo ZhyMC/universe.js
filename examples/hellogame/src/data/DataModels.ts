@@ -11,6 +11,15 @@ const datamodels : {[key:string] : Universe.DataModel} = {
             z : { default : 0 }
         }
     },
+    PointLight:{
+        name:"PointLight",
+        db:Universe.DBType.LokiDB,
+        prop:{
+            x : { default : 0 },
+            y : { default : 0 },   
+            z : { default : 0 }
+        }
+    },
     Chunk : Universe.ChunkModel.getDataModel(),
     Brick : Universe.BrickModel.getDataModel()
 

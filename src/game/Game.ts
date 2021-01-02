@@ -15,6 +15,7 @@ import IUniverseDB from "../universe/data/db/IUniverseDB";
 import NoDB from "../universe/data/db/NoDB";
 import LokiDB from "../universe/data/db/LokiDB";
 import WebIndexedDB from "../universe/data/db/WebIndexedDB";
+import ComposeDB, { DBConfig } from "../universe/data/db/ComposeDB";
 
 const sleep = (time:number)=>new Promise((resolve)=>setTimeout(resolve,time));
 
@@ -28,6 +29,7 @@ class WebGLGame{
     protected inited : boolean = false;
 
     private controllers : Controllers;
+
     private renderer;
 
     private alive : boolean = false;
@@ -47,12 +49,14 @@ class WebGLGame{
         this.renderer = new Three.WebGLRenderer({
             canvas
         });
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = Three.PCFSoftShadowMap
     }
     getPlayGround(){
         return this.playground;
     }
-    setDataModels(newdb:IUniverseDB,datamodels:DataModel[]){
-        this.db = new DbBuilder(newdb,datamodels).getDatabase();
+    setDataModels(dbconfig:DBConfig,datamodels:DataModel[]){
+        this.db = new DbBuilder(new ComposeDB(dbconfig,datamodels),datamodels).getDatabase();
     }
     addCommand(cmd:ICommand){
         this.commander.addCommand(cmd);
@@ -74,25 +78,26 @@ class WebGLGame{
         
         this.alive = true;
         await this.db.open();
-        this.controllers.start();
+        await this.controllers.start();
         this.next_render_loop();
-        this.fixed_loop();
+
+      
+ 
     }
-    private async fixed_loop(){
+    private async start_fixed_loop(thing:()=>Promise<void>,time:number){
         while(this.alive){
 
-            await this.fixedUpdate();
-            await sleep(50);
+            await thing();
+            await sleep(time);
         }
     }
-    private async fixedUpdate(){
+    private async render(){
         await this.controllers.doTick(this.tick++);
         await this.db.clearChanges();
-    }
-    private render(){
+        this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);
 
         if(this.rendering)
-            this.renderer.render(this.playground.getScene(),this.playground.getCamera());
+            this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);
 
         if(this.alive)
             this.next_render_loop();

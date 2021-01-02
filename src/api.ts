@@ -18,11 +18,17 @@ import ChunkManagerModel from "./map/ChunkManagerModel"
 import ChunkViewObject from "./view/viewobject/ChunkViewObject";
 import IUniverseDB from "./universe/data/db/IUniverseDB";
 import WorkerWebIndexedDB from "./universe/data/db/WorkerIndexedDB";
-import DBType from "./universe/data/db/DBType";
+import SimpleViewObject from "./view/viewobject/SimpleViewObject";
+import PointLightViewObject from "./view/viewobject/PointLightViewObject";
 
+import DBType from "./universe/data/db/DBType";
+import {DBConfig} from "./universe/data/db/ComposeDB";
 import Game from "./game/Game";
 
 export {
+    PointLightViewObject,
+    SimpleViewObject,
+    DBConfig,
     DBType,
     WorkerWebIndexedDB,
     IUniverseDB,

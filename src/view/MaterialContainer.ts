@@ -10,21 +10,21 @@ class MaterialContainer{
         let loader = new Three.TextureLoader();
         
         let texture = (await loader.loadAsync(url)) as Three.Texture; 
-        texture.minFilter = Three.LinearFilter;
+        texture.minFilter = Three.NearestFilter;
         texture.magFilter = Three.NearestFilter;
 
         return texture;
     }
     async loadSpriteMtl(key:string,url:string){
 
-        let mtl = new Three.SpriteMaterial({
+        let mtl = new Three.MeshBasicMaterial({
             map:await this.loadTexture(url)
         });
         this.set(key,mtl);
     }
     async loadBasicMtl(key:string,url:string){
         
-        let mtl = new Three.MeshBasicMaterial({
+        let mtl = new Three.MeshStandardMaterial({
             map:await this.loadTexture(url)
         })
         this.set(key,mtl);
@@ -38,7 +38,7 @@ class MaterialContainer{
         return this.map.get(key) as Three.Material;
     }
     getBasicMtl(key:string){
-        return this.get(key) as Three.MeshBasicMaterial;
+        return this.get(key) as Three.MeshStandardMaterial;
     }
     getSpriteMtl(key:string){
         return this.get(key) as Three.SpriteMaterial;
