@@ -190,6 +190,9 @@ class ChunkViewObject implements IViewObject{
         this.geometry.attributes.uv.needsUpdate = true;
     }
 
+    get o3(){
+      return this.getObject3D();
+    }
     getObject3D() : Three.Object3D{
         return this.mesh;
     }    

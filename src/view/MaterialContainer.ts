@@ -24,7 +24,7 @@ class MaterialContainer{
     }
     async loadBasicMtl(key:string,url:string){
         
-        let mtl = new Three.MeshStandardMaterial({
+        let mtl = new Three.MeshLambertMaterial({
             map:await this.loadTexture(url)
         })
         this.set(key,mtl);

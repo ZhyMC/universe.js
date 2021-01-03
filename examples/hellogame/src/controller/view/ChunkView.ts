@@ -29,17 +29,17 @@ class ChunkView extends Universe.ViewController{
         let viewobjs = new Set<ChunkViewObject>();
         for(let {row} of changes){
 
-//            console.log(row,x*Universe.ChunkModel.xw,0,z*Universe.ChunkModel.zw);
-
-//            console.log(x*Universe.ChunkModel.xw,0,z*Universe.ChunkModel.zw);
-            
-
             let {x,z} = ChunkModel.getChunkXZ(row.x,row.z);
 
-            let vobj = this.viewobj.query(ChunkModel.getKey(x,z)) as ChunkViewObject;
+            let vobj : ChunkViewObject = this.viewobj.query(ChunkModel.getKey(x,z));
 
-            vobj.getObject3D().position.set(x*ChunkModel.xw,0,z*ChunkModel.zw);
-            vobj.setBrickType(row.x-x*ChunkModel.xw,row.y,row.z-z*ChunkModel.zw,Math.floor(Math.random()*16));    
+            vobj.o3.position.set(x*ChunkModel.xw,0,z*ChunkModel.zw);
+            vobj.setBrickType(
+                row.x - x*ChunkModel.xw,
+                row.y,
+                row.z - z*ChunkModel.zw,
+                Math.floor(Math.random()*16)
+            );    
             viewobjs.add(vobj);
         }
         viewobjs.forEach((obj)=>{

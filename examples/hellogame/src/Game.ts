@@ -4,7 +4,7 @@ import PlayerView from "./controller/view/PlayerView";
 import ChunkView from "./controller/view/ChunkView";
 
 import PlayerController from "./controller/PlayerController";
-import MaploadController from "./controller/MaploadController";
+import MaploadController from "./controller/MapController";
 import CameraView from "./controller/view/CameraView";
 
 

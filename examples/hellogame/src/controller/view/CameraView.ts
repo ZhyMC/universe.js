@@ -10,11 +10,10 @@ class CameraView extends Universe.ViewController{
         let changes = await this.db.getDeltaChanges(["Player"]);
         if(changes.length>0){
             let row = changes[0].row;
-            let vobj = (await this.viewobj.query("camera")) as Universe.SimpleViewObject;
-
-            let obj = vobj.getObject3D();
-            obj.position.set(row.x,row.y+5,row.z+6);
-            obj.lookAt(new Three.Vector3(row.x,row.y,row.z));
+            let vobj = await this.viewobj.query("camera");
+            
+            vobj.o3.position.set(row.x,row.y+5,row.z+6);
+            vobj.o3.lookAt(new Three.Vector3(row.x,row.y,row.z));
             
         }
           

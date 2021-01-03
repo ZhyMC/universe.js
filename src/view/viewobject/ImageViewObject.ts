@@ -16,6 +16,9 @@ class ImageViewObject implements IViewObject{
         this.sprite.material = mtl;
         this.sprite.scale.set(this.scale.x,this.scale.y,1);
     }
+    get o3(){
+        return this.getObject3D();
+    }
     getObject3D() : Three.Object3D{
         return this.sprite;
     }

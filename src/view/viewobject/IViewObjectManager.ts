@@ -3,12 +3,12 @@ import * as Three from "three"
 
 interface IViewObjectManager{
 
-    ensure(key:string,exists:boolean,factory:()=>Promise<IViewObject> | IViewObject):any;
+    ensure<T extends IViewObject>(key:string,exists:boolean,factory:()=>Promise<T> | T) : Promise<T>;
     set(key:string,vobj:IViewObject):void;
     remove(key:string):void;
     has(key:string):boolean;
 
-    query(key:string):IViewObject;
+    query<T extends IViewObject>(key:string):T;
     find(key:string):Three.Object3D;
 }
 

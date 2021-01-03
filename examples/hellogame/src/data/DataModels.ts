@@ -1,23 +1,23 @@
 import * as Universe from "universe.js";
 
+
+const components = {
+    entity:{
+        entity : { default : true },
+        health : { default:10 },
+        x : { default : 0 },
+        y : { default : 0 },   
+        z : { default : 0 }
+        
+    }
+};
+
 const datamodels : {[key:string] : Universe.DataModel} = {
     Player : {
         name:"Player",
         db:Universe.DBType.LokiDB,
         prop:{
-            health : { default:10 },
-            x : { default : 0 },
-            y : { default : 0 },   
-            z : { default : 0 }
-        }
-    },
-    PointLight:{
-        name:"PointLight",
-        db:Universe.DBType.LokiDB,
-        prop:{
-            x : { default : 0 },
-            y : { default : 0 },   
-            z : { default : 0 }
+            ...components.entity
         }
     },
     Chunk : Universe.ChunkModel.getDataModel(),

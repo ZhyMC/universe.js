@@ -1,7 +1,4 @@
 import * as Universe from "universe.js";
-import PlayerModel from "../model/PlayerModel";
-
-
 
 class MaploadController extends Universe.Controller{
     async start(){
@@ -9,10 +6,11 @@ class MaploadController extends Universe.Controller{
     }
     async doTick(){
         let manager = new Universe.ChunkManagerModel(this.db);
-        let player = new PlayerModel(this.db);
-        let chunkxz = await player.getChunkXZ();
         
-        await manager.loadChunk(chunkxz.x,chunkxz.z);
+        let player = await this.db.findOne("Player",{});
+
+        let {x,z} = Universe.ChunkModel.getChunkXZ(player.x,player.z);
+        await manager.loadChunk(x,z);
 
         
     }

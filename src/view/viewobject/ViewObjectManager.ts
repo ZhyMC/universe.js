@@ -11,7 +11,7 @@ class ViewObjectManager implements IViewObjectManager{
     constructor(scene:Three.Scene){
         this.scene = scene;
     }
-    async ensure(key:string,exists:boolean,factory:()=>Promise<IViewObject> | IViewObject) : Promise<any>{
+    async ensure<T extends IViewObject>(key:string,exists:boolean,factory:()=>Promise<T> | T) : Promise<T>{
         let val = this.vobjs.get(key)
 
         if(exists && !val){
@@ -20,10 +20,10 @@ class ViewObjectManager implements IViewObjectManager{
             return ins;   
         }else if(!exists && val){
             this.remove(key);
-        }else{
-            return val as IViewObject;
         }
-
+        
+            return val as T;
+        
     }
     set(key:string,vobj:IViewObject){
         if(!this.has(key))
@@ -41,10 +41,10 @@ class ViewObjectManager implements IViewObjectManager{
     has(key:string):boolean{
         return this.vobjs.has(key);
     }
-    query(key:string) : IViewObject{
+    query<T extends IViewObject>(key:string):T{
         if(!this.has(key))
             throw new Error("can't find view objects");
-        return this.vobjs.get(key) as IViewObject;
+        return this.vobjs.get(key) as T;
     }
     find(key:string) : Three.Object3D{
         return this.query(key).getObject3D();

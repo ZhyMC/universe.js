@@ -2,7 +2,7 @@ import * as Three from "three";
 import IViewObject from "./IViewObject";
 
 class PointLightViewObject implements IViewObject{
-    private light : Three.Light;
+    private light : Three.PointLight;
 
     constructor(){
         this.light = new Three.PointLight();
@@ -11,7 +11,10 @@ class PointLightViewObject implements IViewObject{
     async load(){
 
     }
-    getObject3D() : Three.Object3D{
+    get o3(){
+        return this.getObject3D();
+    }
+    getObject3D() : Three.PointLight{
         return this.light;
     }    
 

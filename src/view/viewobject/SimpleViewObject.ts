@@ -5,12 +5,16 @@ class SimpleViewObject implements IViewObject{
     constructor(obj : Three.Object3D){
         this.obj = obj;
     }
-    async load(){
-
+    get o3(){
+        return this.getObject3D();
     }
     getObject3D(){
         return this.obj;
     }
+    async load(){
+
+    }
+    
 
 }
 
