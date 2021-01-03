@@ -28,6 +28,7 @@ class PlayGround{
     }
     private initCamera(){
         this.camera = new Three.PerspectiveCamera(50,2,0.1,2000);
+     
         this.obj_manager.set("camera",new SimpleViewObject(this.camera));
         
     }

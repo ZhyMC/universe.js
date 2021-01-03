@@ -20,12 +20,14 @@ import IUniverseDB from "./universe/data/db/IUniverseDB";
 import WorkerWebIndexedDB from "./universe/data/db/WorkerIndexedDB";
 import SimpleViewObject from "./view/viewobject/SimpleViewObject";
 import PointLightViewObject from "./view/viewobject/PointLightViewObject";
+import CartoonFragShaderA from "./shaders/CartoonFragShaderA";
 
 import DBType from "./universe/data/db/DBType";
 import {DBConfig} from "./universe/data/db/ComposeDB";
 import Game from "./game/Game";
 
 export {
+    CartoonFragShaderA,
     PointLightViewObject,
     SimpleViewObject,
     DBConfig,

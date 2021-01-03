@@ -42,17 +42,21 @@ class Game extends Universe.Game{
         
         this.inited = true;
     }
-    private loadSpriteAsset(path:string,key:string){
-        return this.material_manager.loadSpriteMtl(key,`${this.assets_dir}/${path}.png`);
-    }
-    private loadBasicMtl(path:string,key:string){
-        return this.material_manager.loadBasicMtl(key,`${this.assets_dir}/${path}.png`);
-    }
+ 
     
     private async loadAssets(){
-        await this.loadSpriteAsset("player","player");
-        await this.loadBasicMtl("brickmap","brickmap");
+        await this.material_manager.loadSpriteMtl("player",`${this.assets_dir}/player.png`);
         
+
+        await this.material_manager.loadShaderMtl("brickmap",Universe.CartoonFragShaderA,{
+            tex:{
+                type:"t",
+                value:await this.material_manager.loadTexture(`${this.assets_dir}/brickmap.png`)
+            }
+        });
+ 
+
+        //await this.material_manager.loadBasicMtl("brickmap",`${this.assets_dir}/brickmap.png`);
     }
 }
 

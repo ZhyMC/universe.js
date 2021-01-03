@@ -24,7 +24,8 @@ class PlayerController extends Universe.Controller{
             offz += +0.1;
             
         }
-        await this.db.findAndUpdate("Player",{},{x:player.x+offx,z:player.z+offz});
+        if(offx != 0 || offz != 0)
+         await this.db.findAndUpdate("Player",{},{x:player.x+offx,z:player.z+offz});
     }
 
 }

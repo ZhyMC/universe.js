@@ -90,6 +90,7 @@ class ChunkViewObject implements IViewObject{
       let geometry = new Three.BufferGeometry();
       geometry.setAttribute("position",new Three.BufferAttribute(positions,3));
       geometry.setAttribute("normal",new Three.BufferAttribute(normals,3));
+
       geometry.setAttribute("uv",new Three.BufferAttribute(new Float32Array(len*2*points*faces),2));
 
       geometry.setIndex(indexes);
