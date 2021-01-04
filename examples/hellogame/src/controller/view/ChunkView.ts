@@ -38,7 +38,7 @@ class ChunkView extends Universe.ViewController{
                 row.x - x*ChunkModel.xw,
                 row.y,
                 row.z - z*ChunkModel.zw,
-                Math.floor(3)
+                Math.floor(Math.random()*16)
             );    
             viewobjs.add(vobj);
         }

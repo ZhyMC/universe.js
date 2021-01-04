@@ -1,5 +1,4 @@
 import * as Three from "three";
-import HTMLImageLoader from "../utils/HTMLImageLoader";
 import VertexShader from "../shaders/VertexShader";
 
 class MaterialContainer{
@@ -27,27 +26,20 @@ class MaterialContainer{
             },
             lights:true,
         });
-
-
-        this.set(key,mtl);
-        return mtl;
-    }
-
-    async loadSpriteMtl(key:string,url:string){
-
-        let mtl = new Three.MeshBasicMaterial({
-            map:await this.loadTexture(url)
-        });
-        this.set(key,mtl);
-        return mtl;
-    }
-    async loadBasicMtl(key:string,url:string){
         
-        let mtl = new Three.MeshLambertMaterial({
-            map:await this.loadTexture(url)
-        })
         this.set(key,mtl);
         return mtl;
+    }
+    addMaterial<T extends Three.Material>(key:string,mtl:T):T{
+        this.set(key,mtl);
+        return mtl;
+    }
+    
+    doTick(tick:number){
+        for(let v of this.map.values()){
+            if(v instanceof Three.ShaderMaterial)
+                v.uniforms["uTime"] = {value:tick};
+        }
     }
     set(key : string,mtl : Three.Material){
         this.map.set(key,mtl);

@@ -92,7 +92,9 @@ class WebGLGame{
         }
     }
     private async render(){
-        await this.controllers.doTick(this.tick++);
+        
+        await this.controllers.doTick(this.tick);
+        await this.material_manager.doTick(this.tick);
         await this.db.clearChanges();
         this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);
 
@@ -101,6 +103,9 @@ class WebGLGame{
 
         if(this.alive)
             this.next_render_loop();
+
+        this.tick++;
+        
     }
     private next_render_loop(){
         requestAnimationFrame(this.render.bind(this));
