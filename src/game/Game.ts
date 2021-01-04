@@ -5,16 +5,12 @@ import ICommand from "../universe/command/ICommand";
 
 import PlayGround from "../view/playground/PlayGround";
 import * as Three from "three";
-import IModel from "../universe/model/IModel";
-import IViewObjectManager from "../view/viewobject/IViewObjectManager";
-import ViewObjectManager from "../view/viewobject/ViewObjectManager";
-import MaterialContainer from "../view/MaterialContainer";
+import IViewObjectManager from "../view/viewobject/manager/IViewObjectManager";
+import MaterialContainer from "../view/MaterialManager";
 import DataModel from "../universe/data/DataModel";
 import DbBuilder from "../universe/data/DbBuilder";
 import IUniverseDB from "../universe/data/db/IUniverseDB";
 import NoDB from "../universe/data/db/NoDB";
-import LokiDB from "../universe/data/db/LokiDB";
-import WebIndexedDB from "../universe/data/db/WebIndexedDB";
 import ComposeDB, { DBConfig } from "../universe/data/db/ComposeDB";
 
 const sleep = (time:number)=>new Promise((resolve)=>setTimeout(resolve,time));
@@ -51,6 +47,8 @@ class WebGLGame{
         });
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = Three.PCFSoftShadowMap
+        
+        
     }
     getPlayGround(){
         return this.playground;

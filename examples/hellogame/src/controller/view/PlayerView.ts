@@ -9,7 +9,7 @@ class PlayerView extends Universe.ViewController{
     private async tickLight(player:Universe.ImageViewObject,light:Universe.PointLightViewObject){
         light.o3.intensity = 1;
 
-        light.o3.position.set(player.o3.position.x,player.o3.position.y+5,player.o3.position.z)
+        light.o3.position.set(player.o3.position.x,player.o3.position.y+5,player.o3.position.z+5)
     }
     
     private async tickLookAtCamera(player:Universe.ImageViewObject,camera:Three.Object3D){

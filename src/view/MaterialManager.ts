@@ -30,6 +30,15 @@ class MaterialContainer{
         this.set(key,mtl);
         return mtl;
     }
+    async loadSpriteMtl(key:string,texture:Three.Texture){
+        let mtl = new Three.MeshBasicMaterial({
+            side:Three.DoubleSide,
+            map:texture,
+            transparent:true
+        })
+        this.set(key,mtl);
+        return mtl;
+    }
     addMaterial<T extends Three.Material>(key:string,mtl:T):T{
         this.set(key,mtl);
         return mtl;

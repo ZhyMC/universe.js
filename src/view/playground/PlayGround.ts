@@ -1,5 +1,5 @@
 import * as Three from "three";
-import ViewObjectManager from "../viewobject/ViewObjectManager";
+import ViewObjectManager from "../viewobject/manager/ViewObjectManager";
 import SimpleViewObject from "../viewobject/SimpleViewObject";
 import {Sky} from "./SkyObject";
 import { Vector3 } from "three";

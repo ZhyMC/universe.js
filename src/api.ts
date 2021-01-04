@@ -8,7 +8,7 @@ import PlayGround from "./view/playground/PlayGround";
 import ICommand from "./universe/command/ICommand";
 import HTMLCommand from "./universe/command/htmlcommand/HTMLCommand";
 import HTMLCommandContext from "./universe/command/htmlcommand/HTMLCommandContext";
-import ImageViewObject from "./view/viewobject/ImageViewObject";
+import ImageViewObject from "./view/viewobject/SpriteViewObject";
 import SingleModel from "./universe/model/SingleModel";
 import BindedModel from "./universe/model/BindedModel";
 import BrickViewObject from "./view/viewobject/BrickViewObject";

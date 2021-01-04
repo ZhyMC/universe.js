@@ -1,4 +1,4 @@
-import IViewObject from "./IViewObject";
+import IViewObject from "../define/IViewObject";
 import * as Three from "three"
 
 interface IViewObjectManager{

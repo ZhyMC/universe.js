@@ -1,5 +1,4 @@
 import * as Universe from "universe.js";
-import * as Three from "three";
 
 import PlayerView from "./controller/view/PlayerView";
 import ChunkView from "./controller/view/ChunkView";
@@ -48,8 +47,7 @@ class Game extends Universe.Game{
         return this.material_manager.loadTexture(`${this.assets_dir}/${path_key}.png`);
     }
     private async loadAssets(){
-        await this.material_manager.addMaterial("player",new Three.MeshBasicMaterial({map:await this.loadTexture("player")}));
-        
+        await this.material_manager.loadSpriteMtl("player",await this.loadTexture("player"));        
         await this.material_manager.loadShaderMtl("brickmap",Universe.GroundFragShaderA,{
             tex:{
                 type:"t",

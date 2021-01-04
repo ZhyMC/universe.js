@@ -1,14 +1,14 @@
 import IController from "./IController";
-import IViewObjectManager from "../../view/viewobject/IViewObjectManager";
-import MaterialContainer from "../../view/MaterialContainer";
+import IViewObjectManager from "../../view/viewobject/manager/IViewObjectManager";
+import MaterialManager from "../../view/MaterialManager";
 import IUniverseDB from "../data/db/IUniverseDB";
 
 abstract class ViewController implements IController{
     protected db: IUniverseDB;
     protected viewobj: IViewObjectManager;
-    protected mtl : MaterialContainer;
+    protected mtl : MaterialManager;
     
-    constructor(viewobj:IViewObjectManager,mtlcontainer:MaterialContainer,db:IUniverseDB){
+    constructor(viewobj:IViewObjectManager,mtlcontainer:MaterialManager,db:IUniverseDB){
         this.viewobj = viewobj;
         this.mtl = mtlcontainer;
         this.db = db;

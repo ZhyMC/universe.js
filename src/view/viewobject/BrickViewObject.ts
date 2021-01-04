@@ -1,5 +1,5 @@
 import * as Three from "three";
-import IViewObject from "./IViewObject";
+import IViewObject from "./define/IViewObject";
 
 class BrickViewObject implements IViewObject{
     private brick : Three.BoxBufferGeometry;
@@ -7,17 +7,12 @@ class BrickViewObject implements IViewObject{
     static geometry = new Three.BoxBufferGeometry(1,1,1);
 
     constructor(){
-
         this.brick = BrickViewObject.geometry;
         this.obj = new Three.Mesh(this.brick);
-    }
-    async load(){
-
     }
     setImageMtl(mtl:Three.MeshStandardMaterial){
         this.obj.material = [mtl,mtl,mtl,mtl,mtl,mtl];
     }
-
     get o3(){
         return this.getObject3D();
     }

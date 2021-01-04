@@ -1,20 +1,14 @@
 import * as Three from "three";
-import IViewObject from "./IViewObject";
+import IViewObject from "./define/IViewObject";
 
 class PointLightViewObject implements IViewObject{
     private light : Three.PointLight;
 
     constructor(){
         this.light = new Three.PointLight();
-
+        this.light.castShadow = true;
     }
-    async load(){
-
-    }
-    get o3(){
-        return this.getObject3D();
-    }
-    getObject3D() : Three.PointLight{
+    get o3() : Three.PointLight{
         return this.light;
     }    
 

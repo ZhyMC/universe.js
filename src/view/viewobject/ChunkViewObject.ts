@@ -1,7 +1,6 @@
 import * as Three from "three";
-import IViewObject from "./IViewObject";
 import ChunkModel from "../../map/ChunkModel";
-import RPCWorker from "../../utils/RPCWorker";
+import IViewObject from "./define/IViewObject";
 
 class ChunkViewObject implements IViewObject{
     static faces = [
@@ -69,9 +68,11 @@ class ChunkViewObject implements IViewObject{
     private mesh : Three.Mesh;
 
     constructor(bricks_material:Three.Material){
+      
         this.geometry = ChunkViewObject.initedGeometry.clone();
 
         this.mesh = new Three.Mesh(this.geometry,bricks_material);
+        this.mesh.receiveShadow = true;
 
     }
   
@@ -190,11 +191,7 @@ class ChunkViewObject implements IViewObject{
         this.geometry.attributes.normal.needsUpdate = true;
         this.geometry.attributes.uv.needsUpdate = true;
     }
-
-    get o3(){
-      return this.getObject3D();
-    }
-    getObject3D() : Three.Object3D{
+    get o3() : Three.Object3D{
         return this.mesh;
     }    
 

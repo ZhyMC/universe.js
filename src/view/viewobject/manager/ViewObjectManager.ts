@@ -1,5 +1,5 @@
-import PlayGround from "../playground/PlayGround";
-import IViewObject from "./IViewObject";
+import PlayGround from "../../playground/PlayGround";
+import IViewObject from "../define/IViewObject";
 import IViewObjectManager from "./IViewObjectManager";
 import * as Three from "three";
 
@@ -27,7 +27,7 @@ class ViewObjectManager implements IViewObjectManager{
     }
     set(key:string,vobj:IViewObject){
         if(!this.has(key))
-            this.scene.add(vobj.getObject3D());
+            this.scene.add(vobj.o3);
 
         this.vobjs.set(key,vobj);
         this.keymap.set(vobj,key);
@@ -35,7 +35,7 @@ class ViewObjectManager implements IViewObjectManager{
     remove(key:string):void{
         let vobj = this.query(key);
         this.vobjs.delete(key);
-        this.scene.remove(vobj.getObject3D());
+        this.scene.remove(vobj.o3);
         this.keymap.delete(vobj);
     }
     has(key:string):boolean{
@@ -47,7 +47,7 @@ class ViewObjectManager implements IViewObjectManager{
         return this.vobjs.get(key) as T;
     }
     find(key:string) : Three.Object3D{
-        return this.query(key).getObject3D();
+        return this.query(key).o3;
     }
 
 }
