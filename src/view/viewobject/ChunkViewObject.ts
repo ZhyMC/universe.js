@@ -1,6 +1,6 @@
 import * as Three from "three";
-import ChunkModel from "../../map/ChunkModel";
-import IViewObject from "./define/IViewObject";
+import {ChunkModel} from "../../map/ChunkModel";
+import {IViewObject} from "./define/IViewObject";
 
 class ChunkViewObject implements IViewObject{
     static faces = [
@@ -197,4 +197,4 @@ class ChunkViewObject implements IViewObject{
 
 }
 
-export default ChunkViewObject;
+export {ChunkViewObject};

@@ -1,5 +1,5 @@
-import ICommand from "../ICommand";
-import HTMLCommandContext from "./HTMLCommandContext";
+import {ICommand} from "../ICommand";
+import {HTMLCommandContext} from "./HTMLCommandContext";
 
 
 class HTMLCommand implements ICommand{
@@ -18,4 +18,4 @@ class HTMLCommand implements ICommand{
     
 }
 
-export default HTMLCommand;
+export {HTMLCommand};

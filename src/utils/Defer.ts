@@ -10,4 +10,4 @@ class Defer<T>{
     }
 }
 
-export default Defer;
+export {Defer};

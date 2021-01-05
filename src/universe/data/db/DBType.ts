@@ -3,4 +3,4 @@ enum DBType{
     IndexedDB
 }
 
-export default DBType;
+export {DBType};

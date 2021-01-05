@@ -1,11 +1,11 @@
-import {DBType,DBConfig} from "universe.js";
+import * as Universe from "universe.js";
 
-const DBConfig : DBConfig = [
+const DBConfig : Universe.db.DBConfig = [
     {
-        db:DBType.IndexedDB,
+        db:Universe.db.DBType.IndexedDB,
         options:"./worker/indexeddb.worker.js"
     }
 ]
 
 
-export default DBConfig;
+export {DBConfig};

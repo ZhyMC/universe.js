@@ -1,11 +1,11 @@
-import DBType from "./db/DBType";
+import {DBType} from "./db/DBType";
 
 type DataModelProperty = {
     default : any,
     [key:string]:any
 }
 
-type DataModel ={
+export type DataModel ={
     name:string,
     db?:DBType,
     indice?:string[],
@@ -13,5 +13,3 @@ type DataModel ={
         [key:string]:DataModelProperty
     }
 };
-
-export default DataModel;

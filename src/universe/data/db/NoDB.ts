@@ -1,4 +1,4 @@
-import IUniverseDB, { Change, FindCondition, RowData } from "./IUniverseDB";
+import {IUniverseDB,  Change, FindCondition, RowData } from "./IUniverseDB";
 
 class NoDB implements IUniverseDB{
     async open(){
@@ -37,4 +37,4 @@ class NoDB implements IUniverseDB{
 
 }
 
-export default NoDB;
+export {NoDB};

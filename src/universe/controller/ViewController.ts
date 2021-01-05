@@ -1,9 +1,9 @@
-import IController from "./IController";
-import IViewObjectManager from "../../view/viewobject/manager/IViewObjectManager";
-import MaterialManager from "../../view/MaterialManager";
-import IUniverseDB from "../data/db/IUniverseDB";
+import {IController} from "./IController";
+import {IViewObjectManager} from "../../view/viewobject/manager/IViewObjectManager";
+import {MaterialManager} from "../../view/MaterialManager";
+import {IUniverseDB} from "../data/db/IUniverseDB";
 
-abstract class ViewController implements IController{
+export abstract class ViewController implements IController{
     protected db: IUniverseDB;
     protected viewobj: IViewObjectManager;
     protected mtl : MaterialManager;
@@ -20,5 +20,3 @@ abstract class ViewController implements IController{
     abstract start():Promise<void>;
     abstract doTick(tick:number):Promise<void>;
 }
-
-export default ViewController;

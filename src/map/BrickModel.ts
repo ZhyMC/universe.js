@@ -1,8 +1,7 @@
-import LokiDB from "lokijs";
-import DataModel from "../universe/data/DataModel";
-import BindedModel from "../universe/model/BindedModel";
-import IUniverseDB from "../universe/data/db/IUniverseDB";
-import DBType from "../universe/data/db/DBType";
+import {DataModel} from "../universe/data/DataModel";
+import {BindedModel} from "../universe/model/BindedModel";
+import {IUniverseDB} from "../universe/data/db/IUniverseDB";
+import {DBType} from "../universe/data/db/DBType";
 
 class BrickModel extends BindedModel{
     static pack_length : number = 2;
@@ -72,4 +71,4 @@ type BrickBinaryData = {
 };
 
 export { BrickBinaryData };
-export default BrickModel;
+export {BrickModel};

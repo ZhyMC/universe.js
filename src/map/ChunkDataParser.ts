@@ -1,7 +1,7 @@
 import { Buffer } from "buffer";
-import Model from "../universe/model/Model";
-import BrickModel, { BrickBinaryData } from "./BrickModel"
-import ChunkModel from "./ChunkModel";
+import {Model} from "../universe/model/Model";
+import {BrickModel, BrickBinaryData } from "./BrickModel"
+import {ChunkModel} from "./ChunkModel";
 
 class ChunkDataParser{
     private buffer : Buffer;
@@ -52,4 +52,4 @@ class ChunkDataParser{
 
 }
 
-export default ChunkDataParser;
+export {ChunkDataParser};

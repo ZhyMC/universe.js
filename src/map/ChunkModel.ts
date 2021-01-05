@@ -1,10 +1,10 @@
-import DataModel from "../universe/data/DataModel";
-import BindedModel from "../universe/model/BindedModel";
-import BrickModel from "../map/BrickModel";
-import ChunkDataBuilder from "./ChunkDataBuilder";
-import ChunkDataParser from "./ChunkDataParser";
-import IUniverseDB from "../universe/data/db/IUniverseDB";
-import DBType from "../universe/data/db/DBType";
+import {DataModel} from "../universe/data/DataModel";
+import {BindedModel} from "../universe/model/BindedModel";
+import {BrickModel} from "../map/BrickModel";
+import {ChunkDataBuilder} from "./ChunkDataBuilder";
+import {ChunkDataParser} from "./ChunkDataParser";
+import {IUniverseDB} from "../universe/data/db/IUniverseDB";
+import {DBType} from "../universe/data/db/DBType";
 
 class ChunkModel extends BindedModel{
     static xw: number = 16;
@@ -100,4 +100,4 @@ class ChunkModel extends BindedModel{
     }
 }
 
-export default ChunkModel;
+export {ChunkModel};

@@ -1,11 +1,11 @@
-import ICommanderManager from "../command/ICommandManager";
-import IController from "./IController";
-import IUniverseDB from "../data/db/IUniverseDB";
+import {ICommandManager} from "../command/ICommandManager";
+import {IController} from "./IController";
+import {IUniverseDB} from "../data/db/IUniverseDB";
 
-abstract class Controller implements IController{
+export abstract class Controller implements IController{
     protected db: IUniverseDB;
-    protected commander: ICommanderManager;
-    constructor(commander:ICommanderManager,db:IUniverseDB){
+    protected commander: ICommandManager;
+    constructor(commander:ICommandManager,db:IUniverseDB){
         this.db = db;
         this.commander = commander;
     }
@@ -15,5 +15,3 @@ abstract class Controller implements IController{
     abstract start():Promise<void>;
     abstract doTick(tick:number):Promise<void>;
 }
-
-export default Controller;

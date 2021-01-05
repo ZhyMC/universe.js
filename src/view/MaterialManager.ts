@@ -1,7 +1,6 @@
 import * as Three from "three";
-import VertexShader from "../shaders/VertexShader";
 
-class MaterialContainer{
+class MaterialManager{
     private map : Map<string,Three.Material> = new Map();
     constructor(){
 
@@ -15,11 +14,11 @@ class MaterialContainer{
 
         return texture;
     }
-    async loadShaderMtl(key:string,fragshader:string,initUniforms:any){
+    async loadShaderMtl(key:string,shader_source:{frag:string,vert:string},initUniforms:any){
         
         let mtl = new Three.ShaderMaterial({
-            vertexShader:VertexShader, 
-            fragmentShader:fragshader,
+            vertexShader:shader_source.vert, 
+            fragmentShader:shader_source.frag,
             uniforms : {
                 ...Three.UniformsLib.lights,
                 ...initUniforms
@@ -66,4 +65,4 @@ class MaterialContainer{
     }
 }
 
-export default MaterialContainer;
+export {MaterialManager};

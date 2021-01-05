@@ -1,6 +1,6 @@
-import BindedModel from "./BindedModel";
-import DataModel from "../data/DataModel";
-import IUniverseDB from "../data/db/IUniverseDB";
+import {BindedModel} from "./BindedModel";
+import {DataModel} from "../data/DataModel";
+import {IUniverseDB} from "../data/db/IUniverseDB";
 
 class SingleModel extends BindedModel{
     private binded_key : string;
@@ -46,4 +46,4 @@ class SingleModel extends BindedModel{
     }
 }
 
-export default SingleModel;
+export {SingleModel};

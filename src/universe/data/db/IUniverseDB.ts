@@ -1,16 +1,16 @@
 
 
-type RowData ={
+export type RowData ={
     [key:string] : any
 }
-type FindCondition = RowData;
+export type FindCondition = RowData;
 
-type Change = {
+export type Change = {
     sheet : string,
     operation : "I" | "U" | "D",
     row : RowData
 }
-interface IUniverseDB{
+export interface IUniverseDB{
     
     open(): Promise<void>
     createSheet(sheet:string,indexes?:string[],column?:string[]) : Promise<void>;
@@ -26,6 +26,3 @@ interface IUniverseDB{
     clearChanges() : Promise<void>;
     
 }
-
-export {Change,RowData,FindCondition};
-export default IUniverseDB;

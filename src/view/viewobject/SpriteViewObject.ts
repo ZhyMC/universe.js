@@ -1,5 +1,5 @@
 import * as Three from "three";
-import IViewObject from "./define/IViewObject";
+import {IViewObject} from "./define/IViewObject";
 
 class SpriteViewObject implements IViewObject{
     private sprite : Three.Mesh;
@@ -19,4 +19,4 @@ class SpriteViewObject implements IViewObject{
     }
 }
 
-export default SpriteViewObject;
+export {SpriteViewObject};

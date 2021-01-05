@@ -55,4 +55,4 @@ class ChunkView extends Universe.ViewController{
     
 }
 
-export default ChunkView;
+export {ChunkView};

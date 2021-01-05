@@ -13,4 +13,4 @@ class ChunkLoader{
 
 }
 
-export default ChunkLoader;
+export {ChunkLoader};

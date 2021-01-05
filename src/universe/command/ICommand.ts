@@ -3,4 +3,4 @@ interface ICommand{
     isActive() : boolean;
 }
 
-export default ICommand;
+export {ICommand};

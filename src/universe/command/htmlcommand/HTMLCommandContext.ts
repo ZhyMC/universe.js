@@ -1,6 +1,6 @@
 import MouseTrap from "mousetrap";
-import IController from "../../controller/IController";
-import ICommand from "../ICommand";
+import {IController} from "../../controller/IController";
+import {ICommand} from "../ICommand";
 
 class HTMLCommandContext implements IController{
     private keymap : Map<string,boolean> = new Map();
@@ -63,4 +63,4 @@ class HTMLCommandContext implements IController{
 
 }
 
-export default HTMLCommandContext;
+export {HTMLCommandContext};

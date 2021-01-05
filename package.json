@@ -2,8 +2,8 @@
   "name": "universe.js",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/api.js",
-  "typings": "dist/api.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./scripts/compile.js",

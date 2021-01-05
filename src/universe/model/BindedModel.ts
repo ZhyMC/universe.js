@@ -1,7 +1,6 @@
-import Model from "./Model";
-import LokiDB from "lokijs";
-import DataModel from "../data/DataModel";
-import IUniverseDB from "../data/db/IUniverseDB";
+import {Model} from "./Model";
+import {DataModel} from "../data/DataModel";
+import {IUniverseDB} from "../data/db/IUniverseDB";
 
 type DBModelLine = {
     key:string,
@@ -33,4 +32,4 @@ class BindedModel extends Model{
     }
 }
 
-export default BindedModel;
+export {BindedModel};

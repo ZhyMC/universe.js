@@ -1,7 +1,7 @@
-import IViewObject from "../define/IViewObject";
+import {IViewObject} from "../define/IViewObject";
 import * as Three from "three"
 
-interface IViewObjectManager{
+export interface IViewObjectManager{
 
     ensure<T extends IViewObject>(key:string,exists:boolean,factory:()=>Promise<T> | T) : Promise<T>;
     set(key:string,vobj:IViewObject):void;
@@ -11,5 +11,3 @@ interface IViewObjectManager{
     query<T extends IViewObject>(key:string):T;
     find(key:string):Three.Object3D;
 }
-
-export default IViewObjectManager;

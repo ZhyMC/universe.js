@@ -1,4 +1,4 @@
-import BrickModel from "./BrickModel";
+import {BrickModel} from "./BrickModel";
 import { BrickBinaryData } from "./BrickModel"
 
 
@@ -39,4 +39,4 @@ class ChunkDataBuilder{
 }
 
 
-export default ChunkDataBuilder;
+export {ChunkDataBuilder};

@@ -1,5 +1,5 @@
-import RPCWorker from "../../../utils/RPCWorker";
-import IUniverseDB, { Change, RowData } from "./IUniverseDB";
+import {RPCWorker} from "../../../utils/RPCWorker";
+import {IUniverseDB,  Change, RowData } from "./IUniverseDB";
 import IndexedDBWorker from "../../../worker/dist/indexeddb.worker";
 
 class WorkerWebIndexedDB implements IUniverseDB{
@@ -46,4 +46,4 @@ class WorkerWebIndexedDB implements IUniverseDB{
 
 }
 
-export default WorkerWebIndexedDB;
+export {WorkerWebIndexedDB};

@@ -22,4 +22,4 @@ class CameraView extends Universe.ViewController{
     
 }
 
-export default CameraView;
+export {CameraView};

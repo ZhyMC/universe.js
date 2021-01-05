@@ -1,7 +1,7 @@
-import DBType from "./DBType";
-import IUniverseDB, { Change, RowData } from "./IUniverseDB";
-import LokiDB from "./LokiDB";
-import WorkerWebIndexedDB from "./WorkerIndexedDB";
+import {DBType} from "./DBType";
+import {IUniverseDB,  Change, RowData } from "./IUniverseDB";
+import {LokiDB} from "./LokiDB";
+import {WorkerWebIndexedDB} from "./WorkerIndexedDB";
 
 type DBDefine = {
     name:string,
@@ -113,4 +113,4 @@ class ComposeDB implements IUniverseDB{
 }
 
 export {DBConfig};
-export default ComposeDB;
+export {ComposeDB};

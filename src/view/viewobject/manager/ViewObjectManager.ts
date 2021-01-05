@@ -1,6 +1,6 @@
-import PlayGround from "../../playground/PlayGround";
-import IViewObject from "../define/IViewObject";
-import IViewObjectManager from "./IViewObjectManager";
+import {PlayGround} from "../../playground/PlayGround";
+import {IViewObject} from "../define/IViewObject";
+import {IViewObjectManager} from "./IViewObjectManager";
 import * as Three from "three";
 
 class ViewObjectManager implements IViewObjectManager{
@@ -52,4 +52,4 @@ class ViewObjectManager implements IViewObjectManager{
 
 }
 
-export default ViewObjectManager;
+export {ViewObjectManager};

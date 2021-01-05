@@ -1,5 +1,5 @@
-import IUniverseDB, { Change, RowData } from "./IUniverseDB";
-import Dexie from "dexie";
+import {IUniverseDB,  Change, RowData } from "./IUniverseDB";
+import {Dexie} from "dexie";
 
 class WebIndexedDB implements IUniverseDB{
     private dexie : Dexie;
@@ -87,4 +87,4 @@ class WebIndexedDB implements IUniverseDB{
 
 }
 
-export default WebIndexedDB;
+export {WebIndexedDB};

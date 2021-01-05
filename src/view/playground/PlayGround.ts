@@ -1,8 +1,8 @@
 import * as Three from "three";
-import ViewObjectManager from "../viewobject/manager/ViewObjectManager";
-import SimpleViewObject from "../viewobject/SimpleViewObject";
+import {ViewObjectManager} from "../viewobject/manager/ViewObjectManager";
+import {SimpleViewObject} from "../viewobject/SimpleViewObject";
 import {Sky} from "./SkyObject";
-import { Vector3 } from "three";
+
 
 class PlayGround{
     private obj_manager;
@@ -74,4 +74,4 @@ class PlayGround{
 }
 
 
-export default PlayGround;
+export {PlayGround};

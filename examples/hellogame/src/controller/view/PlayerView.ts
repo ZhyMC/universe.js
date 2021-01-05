@@ -1,25 +1,27 @@
 import * as Universe from "universe.js";
+import {SpriteViewObject,PointLightViewObject} from "universe.js";
 import * as Three from "three";
+
 
 class PlayerView extends Universe.ViewController{
 
     async start(){            
 
     }
-    private async tickLight(player:Universe.ImageViewObject,light:Universe.PointLightViewObject){
+    private async tickLight(player:SpriteViewObject,light:PointLightViewObject){
         light.o3.intensity = 1;
 
         light.o3.position.set(player.o3.position.x,player.o3.position.y+5,player.o3.position.z+5)
     }
     
-    private async tickLookAtCamera(player:Universe.ImageViewObject,camera:Three.Object3D){
+    private async tickLookAtCamera(player:SpriteViewObject,camera:Three.Object3D){
         player.o3.lookAt(camera.position.clone());
     }
-    private async tickTexture(player:Universe.ImageViewObject){
+    private async tickTexture(player:SpriteViewObject){
         player.setImageMtl(this.mtl.getSpriteMtl("player"));
     
     }
-    private async tickPosition(player:Universe.ImageViewObject,pos:Three.Vector3){
+    private async tickPosition(player:SpriteViewObject,pos:Three.Vector3){
         player.o3.position.copy(pos);
     }
     private async tickPlayer(){
@@ -28,8 +30,8 @@ class PlayerView extends Universe.ViewController{
         if(!has)
             return;
         
-        let player = await this.viewobj.ensure("player",has,()=>new Universe.ImageViewObject({x:1.2,y:1.2}));
-        let light = await this.viewobj.ensure("playerlight",has,()=>new Universe.PointLightViewObject());
+        let player = await this.viewobj.ensure("player",has,()=>new SpriteViewObject({x:1.2,y:1.2}));
+        let light = await this.viewobj.ensure("playerlight",has,()=>new PointLightViewObject());
         let camera = await this.viewobj.find("camera");
         let {x,y,z} = await this.db.findOne("Player",{})
 
@@ -53,4 +55,4 @@ class PlayerView extends Universe.ViewController{
     
 }
 
-export default PlayerView;
+export {PlayerView};

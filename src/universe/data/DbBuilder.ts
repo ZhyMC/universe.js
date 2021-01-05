@@ -1,9 +1,8 @@
-import LokiDB from "lokijs";
-import DataModel from "./DataModel";
-import IUniverseDB from "./db/IUniverseDB";
+import {DataModel} from "./DataModel";
+import {IUniverseDB} from "./db/IUniverseDB";
 
 
-class DbBuilder{
+export class DbBuilder{
     private db : IUniverseDB;
     private models : DataModel[];
     constructor(db : IUniverseDB,datamodels : DataModel[]){
@@ -22,6 +21,3 @@ class DbBuilder{
     }
     
 }
-
-
-export default DbBuilder;

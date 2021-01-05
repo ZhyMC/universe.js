@@ -1,4 +1,4 @@
-import Defer from "./Defer";
+import {Defer} from "./Defer";
 enum LoaderState{
     READY,
     LOADED
@@ -39,4 +39,4 @@ class HTMLImageLoader{
 
 }
 
-export default HTMLImageLoader;
+export {HTMLImageLoader};

@@ -1,4 +1,4 @@
-import IUniverseDB,{Change,RowData,FindCondition} from "./IUniverseDB";
+import {IUniverseDB,Change,RowData,FindCondition} from "./IUniverseDB";
 import Loki from "lokijs";
 
 
@@ -59,4 +59,4 @@ class LokiDB implements IUniverseDB{
     }
 }
 
-export default LokiDB;
+export {LokiDB};

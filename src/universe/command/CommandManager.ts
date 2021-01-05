@@ -1,5 +1,5 @@
-import ICommand from "./ICommand";
-import ICommandManager from "./ICommandManager";
+import {ICommand} from "./ICommand";
+import {ICommandManager} from "./ICommandManager";
 
 class CommandManager implements ICommandManager{
     private cmds : Map<string,ICommand> = new Map();
@@ -17,4 +17,4 @@ class CommandManager implements ICommandManager{
     }
 }
 
-export default CommandManager;
+export {CommandManager};

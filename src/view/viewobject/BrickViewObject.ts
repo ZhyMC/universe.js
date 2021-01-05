@@ -1,5 +1,5 @@
 import * as Three from "three";
-import IViewObject from "./define/IViewObject";
+import {IViewObject} from "./define/IViewObject";
 
 class BrickViewObject implements IViewObject{
     private brick : Three.BoxBufferGeometry;
@@ -22,4 +22,4 @@ class BrickViewObject implements IViewObject{
 
 }
 
-export default BrickViewObject;
+export {BrickViewObject};

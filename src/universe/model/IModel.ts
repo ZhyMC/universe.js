@@ -4,4 +4,4 @@ interface IModel extends EventEmitter{
     getName():string;
 }
 
-export default IModel;
+export {IModel};

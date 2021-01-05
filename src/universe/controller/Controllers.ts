@@ -1,6 +1,6 @@
-import IController from "./IController";
+import {IController} from "./IController";
 
-class Controllers implements IController{
+export class Controllers implements IController{
     private controllers : IController[] = [];
     private isAsyncs = new Map<IController,boolean>();
     constructor(){
@@ -49,5 +49,3 @@ class Controllers implements IController{
         })
     }
 }
-
-export default Controllers;

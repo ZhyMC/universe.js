@@ -1,24 +1,24 @@
-import IController from "../universe/controller/IController";
-import Controllers from "../universe/controller/Controllers";
-import CommandManager from "../universe/command/CommandManager";
-import ICommand from "../universe/command/ICommand";
-
-import PlayGround from "../view/playground/PlayGround";
 import * as Three from "three";
-import IViewObjectManager from "../view/viewobject/manager/IViewObjectManager";
-import MaterialContainer from "../view/MaterialManager";
-import DataModel from "../universe/data/DataModel";
-import DbBuilder from "../universe/data/DbBuilder";
-import IUniverseDB from "../universe/data/db/IUniverseDB";
-import NoDB from "../universe/data/db/NoDB";
-import ComposeDB, { DBConfig } from "../universe/data/db/ComposeDB";
+import {IController} from "../universe/controller/IController";
+import {Controllers} from "../universe/controller/Controllers";
+import {CommandManager} from "../universe/command/CommandManager";
+import {ICommand} from "../universe/command/ICommand";
+
+import {PlayGround} from "../view/playground/PlayGround";
+import {IViewObjectManager} from "../view/viewobject/manager/IViewObjectManager";
+import {MaterialManager} from "../view/MaterialManager";
+import {DataModel} from "../universe/data/DataModel";
+import {DbBuilder} from "../universe/data/DbBuilder";
+import {IUniverseDB} from "../universe/data/db/IUniverseDB";
+import {NoDB} from "../universe/data/db/NoDB";
+import {ComposeDB,  DBConfig } from "../universe/data/db/ComposeDB";
 
 const sleep = (time:number)=>new Promise((resolve)=>setTimeout(resolve,time));
 
 class WebGLGame{
     protected commander : CommandManager;
     protected viewobj_manager : IViewObjectManager;
-    protected material_manager : MaterialContainer;
+    protected material_manager : MaterialManager;
     protected playground : PlayGround;
     protected db : IUniverseDB = new NoDB();
 
@@ -36,7 +36,7 @@ class WebGLGame{
 
         this.commander = new CommandManager();
         this.playground = new PlayGround();
-        this.material_manager = new MaterialContainer();
+        this.material_manager = new MaterialManager();
 
         this.viewobj_manager = this.playground.getViewObjectManager();
        
@@ -115,4 +115,4 @@ class WebGLGame{
 
 }
    
-export default WebGLGame;
+export {WebGLGame};

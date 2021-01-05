@@ -1,6 +1,6 @@
 import * as Universe from "universe.js";
 
-class MaploadController extends Universe.Controller{
+class MapController extends Universe.Controller{
     async start(){
 
     }
@@ -17,4 +17,4 @@ class MaploadController extends Universe.Controller{
 
 }
 
-export default MaploadController;
+export {MapController};

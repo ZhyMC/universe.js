@@ -1,8 +1,7 @@
 import { EventEmitter } from "events";
-import LokiDB from "lokijs";
-import DataModel from "../data/DataModel";
-import IUniverseDB from "../data/db/IUniverseDB";
-import IModel from "./IModel";
+import {DataModel} from "../data/DataModel";
+import {IUniverseDB} from "../data/db/IUniverseDB";
+import {IModel} from "./IModel";
 
 type DBModelLine = {
     key:string,
@@ -39,4 +38,4 @@ class Model extends EventEmitter implements IModel{
 
 }
 
-export default Model;
+export {Model};

@@ -1,4 +1,4 @@
-import Defer from "./Defer";
+import {Defer} from "./Defer";
 
 class RPCWorker{
     private worker:Worker;
@@ -31,4 +31,4 @@ class RPCWorker{
     }
 }
 
-export default RPCWorker;
+export {RPCWorker};

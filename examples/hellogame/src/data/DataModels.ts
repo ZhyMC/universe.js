@@ -1,7 +1,7 @@
 import * as Universe from "universe.js";
 
 
-const components = {
+const Components = {
     entity:{
         entity : { default : true },
         health : { default:10 },
@@ -12,16 +12,16 @@ const components = {
     }
 };
 
-const datamodels : {[key:string] : Universe.DataModel} = {
+const DataModels : {[key:string] : Universe.DataModel} = {
     Player : {
         name:"Player",
-        db:Universe.DBType.LokiDB,
+        db:Universe.db.DBType.LokiDB,
         prop:{
-            ...components.entity
+            ...Components.entity
         }
     },
     Chunk : Universe.ChunkModel.getDataModel(),
     Brick : Universe.BrickModel.getDataModel()
 
 };
-export default datamodels;
+export {Components,DataModels};

@@ -1,6 +1,6 @@
 import * as Universe from "universe.js";
 
-class PlayerView extends Universe.ViewController{
+export class LightView extends Universe.ViewController{
 
     async start(){
     
@@ -12,5 +12,3 @@ class PlayerView extends Universe.ViewController{
     }
     
 }
-
-export {PlayerView};

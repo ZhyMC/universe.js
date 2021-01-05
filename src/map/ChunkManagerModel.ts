@@ -1,8 +1,8 @@
-import BindedModel from "../universe/model/BindedModel";
-import ChunkDataParser from "./ChunkDataParser";
-import ChunkLoader from "./ChunkLoader";
-import ChunkModel from "./ChunkModel";
-import IUniverseDB from "../universe/data/db/IUniverseDB";
+import {BindedModel} from "../universe/model/BindedModel";
+import {ChunkDataParser} from "./ChunkDataParser";
+import {ChunkLoader} from "./ChunkLoader";
+import {ChunkModel} from "./ChunkModel";
+import {IUniverseDB} from "../universe/data/db/IUniverseDB";
 
 class ChunkManagerModel extends BindedModel{
     
@@ -36,4 +36,4 @@ class ChunkManagerModel extends BindedModel{
 
 }
 
-export default ChunkManagerModel;
+export {ChunkManagerModel};

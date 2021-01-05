@@ -30,4 +30,4 @@ class PlayerController extends Universe.Controller{
 
 }
 
-export default PlayerController;
+export {PlayerController};

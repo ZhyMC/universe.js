@@ -1,7 +1,7 @@
-import ICommand from "./ICommand";
+import {ICommand} from "./ICommand";
 
-interface ICommanderManager{
+interface ICommandManager{
     addCommand(cmd:ICommand):void;
     isActive(cmd:string):boolean;
 }
-export default ICommanderManager;
+export {ICommandManager};
