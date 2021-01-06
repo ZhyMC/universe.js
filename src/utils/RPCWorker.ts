@@ -1,22 +1,35 @@
+import { EventEmitter } from "events";
 import {Defer} from "./Defer";
 
-class RPCWorker{
+class RPCWorker extends EventEmitter{
     private worker:Worker;
     private defers = new Map<number,Defer<any>>();
     private callid = 0;
     constructor(worker:Worker){
+        super();
         this.worker = worker;
         this.worker.onmessage = this.onMessage.bind(this)
     }
-    private onMessage(event:any){
-        let {ok,data,callid} : {ok:boolean,data:any,callid:number} = event.data;
-        if(!ok){
-            let err:any = new Error();
-            err.stack = data;
-            throw err;
+
+    private onMessage({data}:any){
+        for(let e of data){
+            this.handleEvent(e);
         }
-        (this.defers.get(callid) as Defer<any>).resolve(data);
-        this.defers.delete(callid);
+    }
+    private handleEvent(event:any){
+        let {eventname,ok,data,callid} : {eventname:string,ok:boolean,data:any,callid:number} = event;
+
+        if(eventname == "invoke"){
+            if(!ok){
+                let err:any = new Error();
+                err.stack = data;
+                throw err;
+            }
+            (this.defers.get(callid) as Defer<any>).resolve(data);
+    
+            this.defers.delete(callid);
+        }else
+            this.emit(eventname,data);
     }
     async send(method:string,params:any[] = []) : Promise<any>{
         let callid = this.callid++;
@@ -27,6 +40,7 @@ class RPCWorker{
             method,
             params
         });
+
         return await defer.promise;
     }
 }

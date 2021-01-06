@@ -11,7 +11,7 @@ class PlayerView extends Universe.ViewController{
     private async tickLight(player:SpriteViewObject,light:PointLightViewObject){
         light.o3.intensity = 1;
 
-        light.o3.position.set(player.o3.position.x,player.o3.position.y+5,player.o3.position.z+5)
+        light.o3.position.set(player.o3.position.x,player.o3.position.y+5,player.o3.position.z)
     }
     
     private async tickLookAtCamera(player:SpriteViewObject,camera:Three.Object3D){
@@ -30,18 +30,23 @@ class PlayerView extends Universe.ViewController{
         if(!has)
             return;
         
-        let player = await this.viewobj.ensure("player",has,()=>new SpriteViewObject({x:1.2,y:1.2}));
+
+        let player = await this.viewobj.ensure("player",has,()=>new SpriteViewObject({x:2.5,y:2.5}));
+        
         let light = await this.viewobj.ensure("playerlight",has,()=>new PointLightViewObject());
         let camera = await this.viewobj.find("camera");
         let {x,y,z} = await this.db.findOne("Player",{})
 
+        
         await this.tickTexture(player);
         await this.tickPosition(player,new Three.Vector3(x,y,z));
         await this.tickLookAtCamera(player,camera);
         await this.tickLight(player,light);
+
     }
     async doTick(){
         let changes = await this.db.getDeltaChanges(["Player"]);
+        
         for(let change of changes){
 
             await this.tickPlayer();

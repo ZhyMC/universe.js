@@ -10,7 +10,13 @@ class MapController extends Universe.Controller{
         let player = await this.db.findOne("Player",{});
 
         let {x,z} = Universe.ChunkModel.getChunkXZ(player.x,player.z);
-        await manager.loadChunk(x,z);
+
+        
+        for(let xs=-1;xs<=1;xs++)
+         for(let zs=-1;zs<=1;zs++)    
+            manager.loadChunk(x+xs,z+zs);
+         
+        
 
         
     }

@@ -1,14 +1,12 @@
 import * as Three from "three";
 import {ViewObjectManager} from "../viewobject/manager/ViewObjectManager";
 import {SimpleViewObject} from "../viewobject/SimpleViewObject";
-import {Sky} from "./SkyObject";
 
 
 class PlayGround{
     private obj_manager;
     private scene : Three.Scene;
     private camera? : Three.Camera;
-    private sky? : Sky;
     private dlight? : Three.DirectionalLight;
     constructor(){
         this.scene = new Three.Scene();
@@ -18,7 +16,6 @@ class PlayGround{
 
         this.initSunlight();
         this.initCamera();
-        this.initSky();
     }
     private initSunlight(){
 
@@ -31,24 +28,6 @@ class PlayGround{
      
         this.obj_manager.set("camera",new SimpleViewObject(this.camera));
         
-    }
-    private initSky(){
-
-        this.sky=new Sky();
-        this.obj_manager.set("sky",new SimpleViewObject(this.sky));
-        this.sky.scale.setScalar( 450000 );
-        const uniforms = this.sky.material.uniforms;
-        uniforms[ "turbidity" ].value = 0
-        uniforms[ "rayleigh" ].value = 3
-        uniforms[ "mieCoefficient" ].value = .3
-        uniforms[ "mieDirectionalG" ].value = .8
-        
-     
-        const theta = Math.PI * 1;
-        const phi = 2 * Math.PI * ( 2 - 0.5 );
-
-        uniforms[ "sunPosition" ].value = new Three.Vector3(Math.cos( phi ),Math.sin( phi ) * Math.sin( theta ), Math.sin( phi ) * Math.cos( theta ));
-
     }
     getViewObjectManager(){
         return this.obj_manager;

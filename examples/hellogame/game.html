@@ -10,11 +10,19 @@
         </style>
     </head>
 
+    <div id="count"></div>
+    <div id="frame"></div>
+
     <canvas id="canvas" width="900" height="540"></canvas>
     <script src="game.js"></script>
 
     <script type = "module">
         import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+
+        let count = 0;
+        setInterval(()=>{
+            document.getElementById("count").innerHTML = count++;
+        },1);
 
         let canvas = document.querySelector("#canvas");
 

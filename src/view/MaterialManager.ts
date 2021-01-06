@@ -26,8 +26,7 @@ class MaterialManager{
             lights:true,
         });
         
-        this.set(key,mtl);
-        return mtl;
+        return this.addMaterial(key,mtl);
     }
     async loadSpriteMtl(key:string,texture:Three.Texture){
         let mtl = new Three.MeshBasicMaterial({
@@ -35,8 +34,13 @@ class MaterialManager{
             map:texture,
             transparent:true
         })
-        this.set(key,mtl);
-        return mtl;
+        return this.addMaterial(key,mtl);
+
+    }
+    async loadLambertMtl(key:string,texture:Three.Texture){
+        return this.addMaterial(key,new Three.MeshLambertMaterial({
+            map:texture
+        }))
     }
     addMaterial<T extends Three.Material>(key:string,mtl:T):T{
         this.set(key,mtl);

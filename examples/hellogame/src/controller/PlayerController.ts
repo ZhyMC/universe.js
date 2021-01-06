@@ -2,7 +2,7 @@ import * as Universe from "universe.js";
 
 class PlayerController extends Universe.Controller{
     async start(){
-        this.db.insertOne("Player",{x:0,y:1.5,z:0});
+        this.db.insertOne("Player",{x:0,y:3,z:0});
     }
     async doTick(tick:number){
         
@@ -12,16 +12,16 @@ class PlayerController extends Universe.Controller{
         let offx = 0;
         let offz = 0;
         if(this.commander.isActive("a")){
-            offx += -0.1;
+            offx += -0.2;
         }
         if(this.commander.isActive("d")){
-            offx += +0.1;
+            offx += +0.2;
         }
         if(this.commander.isActive("w")){
-            offz += -0.1;
+            offz += -0.2;
         }
         if(this.commander.isActive("s")){
-            offz += +0.1;
+            offz += +0.2;
             
         }
         if(offx != 0 || offz != 0)

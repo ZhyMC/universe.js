@@ -4,6 +4,8 @@ import Loki from "lokijs";
 
 class LokiDB implements IUniverseDB{
     private db : Loki;
+    private changes : CollectionChange[] = [];
+    private cached : CollectionChange[] = [];
     constructor(){
         this.db = new Loki("universe");
     }
@@ -42,7 +44,7 @@ class LokiDB implements IUniverseDB{
         });
     }
     async getDeltaChanges(sheets:string[] = []){
-        let arr = this.db.generateChangesNotification();
+        let arr =this.cached;
         let all = arr.map((row)=>{
             if(["U","I","D"].indexOf(row.operation)==-1)
                 throw new Error(`row.operation ${row.operation} is unknown`);
@@ -55,7 +57,9 @@ class LokiDB implements IUniverseDB{
 
     }
     async clearChanges(){
+        this.cached = this.db.generateChangesNotification().concat([]); 
         await this.db.clearChanges();
+
     }
 }
 

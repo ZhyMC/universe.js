@@ -1,5 +1,4 @@
 import {BindedModel} from "../universe/model/BindedModel";
-import {ChunkDataParser} from "./ChunkDataParser";
 import {ChunkLoader} from "./ChunkLoader";
 import {ChunkModel} from "./ChunkModel";
 import {IUniverseDB} from "../universe/data/db/IUniverseDB";
@@ -25,7 +24,7 @@ class ChunkManagerModel extends BindedModel{
         let model = this.getChunk(x,z);
         await model.add({x,z});
         await model.unpack(loader.getChunkData());
-
+        
     }
     async unlockChunk(x:number,z:number){
         if(!(await this.isChunkLoaded(x,z)))

@@ -13,7 +13,7 @@ class CameraView extends Universe.ViewController{
             
             let vobj = await this.viewobj.query("camera");
             
-            vobj.o3.position.set(row.x,row.y+5,row.z+6);
+            vobj.o3.position.set(row.x,row.y+10,row.z+12);
             vobj.o3.lookAt(new Three.Vector3(row.x,row.y,row.z));
             
         }

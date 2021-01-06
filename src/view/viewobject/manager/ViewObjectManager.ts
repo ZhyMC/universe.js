@@ -26,8 +26,10 @@ class ViewObjectManager implements IViewObjectManager{
         
     }
     set(key:string,vobj:IViewObject){
-        if(!this.has(key))
+        if(!this.has(key)){
             this.scene.add(vobj.o3);
+            
+        }
 
         this.vobjs.set(key,vobj);
         this.keymap.set(vobj,key);

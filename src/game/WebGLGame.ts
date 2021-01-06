@@ -45,8 +45,9 @@ class WebGLGame{
         this.renderer = new Three.WebGLRenderer({
             canvas
         });
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = Three.PCFSoftShadowMap
+        this.renderer.shadowMap.enabled = false;
+        this.renderer.shadowMap.type = Three.PCFSoftShadowMap;
+
         
         
     }
@@ -94,7 +95,6 @@ class WebGLGame{
         await this.controllers.doTick(this.tick);
         await this.material_manager.doTick(this.tick);
         await this.db.clearChanges();
-        this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);
 
         if(this.rendering)
             this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);

@@ -15,7 +15,6 @@ class WebIndexedDB implements IUniverseDB{
 
         await this.dexie.delete();
 
-        console.log(this.stores);
         this.dexie.version(1).stores(this.stores);
         await this.dexie.open();
 

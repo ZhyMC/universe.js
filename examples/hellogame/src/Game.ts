@@ -36,7 +36,7 @@ class Game extends Universe.game.WebGLGame{
         this.addController(new CameraView(this.viewobj_manager,this.material_manager,this.db));
         this.addController(new PlayerView(this.viewobj_manager,this.material_manager,this.db));
         this.addController(new ChunkView(this.viewobj_manager,this.material_manager,this.db));
-        
+   
         this.inited = true;
     }
  
@@ -53,7 +53,7 @@ class Game extends Universe.game.WebGLGame{
         });
  
 
-        //await this.material_manager.loadBasicMtl("brickmap",`${this.assets_dir}/brickmap.png`);
+        //await this.material_manager.loadLambertMtl("brickmap",await this.loadTexture("brickmap"));
     }
 }
 

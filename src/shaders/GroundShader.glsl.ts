@@ -1,21 +1,11 @@
 const vert =  
     `
-    #include <common>
-    #include <fog_pars_vertex>
-    #include <shadowmap_pars_vertex>
     varying vec3 vNormal;
     varying vec3 vPos;
     varying vec2 vUv;
 
     void main() {
-      #include <beginnormal_vertex>
-      #include <defaultnormal_vertex>
-      
-      #include <begin_vertex>
-      #include <project_vertex>
-      #include <worldpos_vertex>
-      #include <shadowmap_vertex>
-      #include <fog_vertex>
+  
 
       vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;
       vUv = uv;
@@ -34,14 +24,13 @@ const frag =
     uniform sampler2D tex;
 
     uniform float uTime;
+    struct PointLight {
+        vec3 position;
+        vec3 color;
+    };
 
-    #include <common>
-    #include <packing>
-    #include <fog_pars_fragment>
-    #include <bsdfs>
-    #include <lights_pars_begin>
-    #include <shadowmap_pars_fragment>
-    #include <shadowmask_pars_fragment>
+    uniform PointLight pointLights[ NUM_POINT_LIGHTS ];
+
 
     void main() {
 
@@ -58,7 +47,7 @@ const frag =
           pos.z = float(int(pos.z*ratio))/ratio;
 
 
-          float lightness = max(1.0 - distance(pointLights[i].position , pos) / 16.0,0.0);
+          float lightness = max(1.0 - distance(pointLights[i].position , pos) / 15.0,0.0);
 
           
           vec3 lightdir = normalize(pointLights[i].position - pos);
@@ -68,8 +57,7 @@ const frag =
           
           vec3 uvcolor = texture2D(tex,vUv).xyz;
           
-          float shadow = getShadowMask() * 0.5;
-          float val = (ratio*diffuse*lightness+0.3)*shadow;
+          float val = min(ratio*diffuse*lightness+0.3,1.0);
 
           gl_FragColor = vec4(val*uvcolor,1.0);
       }

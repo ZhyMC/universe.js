@@ -4,9 +4,20 @@ class WebIndexedDB{
     dexie;
     stores = {};
     changes = [];
+    events_buffer = [];
+    timer = -1;
 
     constructor(){
         this.dexie = new Dexie("universe");
+        this.timer = setInterval(()=>{
+            if(this.events_buffer.length<=0)
+                return;
+            self.postMessage(this.events_buffer);
+            this.events_buffer = [];
+        },3);
+    }
+    close(){
+        clearInterval(this.timer);
     }
     async open(){
         if(this.dexie.isOpen())
@@ -20,21 +31,21 @@ class WebIndexedDB{
         let stores = Object.keys(this.stores);
         for(let store of stores){
             this.dexie.table(store).hook("creating",(primKey,obj)=>{
-                this.changes.push({
+                this.emitChange({
                     sheet:store,
                     operation:"I",
                     row:obj
                 })
             });
             this.dexie.table(store).hook("updating",(mods,primKey,obj)=>{
-                this.changes.push({
+                this.emitChange({
                     sheet:store,
                     operation:"U",
                     row:obj
                 })
             });
             this.dexie.table(store).hook("deleting",(primKey,obj)=>{
-                this.changes.push({
+                this.emitChange({
                     sheet:store,
                     operation:"D",
                     row:obj
@@ -43,6 +54,9 @@ class WebIndexedDB{
             
         }
     };
+    emitChange(data){
+        this.events_buffer.push({eventname:"change",data})
+    }
     async createSheet(sheet, indexes, column) {
         let indexed = ["++id","&key"];
         indexes = indexes.filter((x)=>(x!="key"));
@@ -61,6 +75,7 @@ class WebIndexedDB{
         
     }
     async insertOne(sheet, row) {
+        
         let num = await this.dexie.table(sheet).put(row,"id");
         return num.toString();
     }
@@ -88,13 +103,14 @@ class WebIndexedDB{
     self.onmessage = async ({data})=>{
         try{
             let msg = {
+                eventname:"invoke",
                 ok : true,
                 callid:data.callid,
                 data : await db[data.method](...data.params)
             }
-            self.postMessage(msg);
+            self.postMessage([msg]);
         }catch(err){
-            self.postMessage({ok:false,callid:data.callid,data:err.stack});
+            self.postMessage([{ok:false,callid:data.callid,data:err.stack}]);
         }
         
     }

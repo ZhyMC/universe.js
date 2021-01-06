@@ -67,11 +67,13 @@ class ChunkViewObject implements IViewObject{
 
     private mesh : Three.Mesh;
 
-    constructor(bricks_material:Three.Material){
+    constructor(x:number,z:number,bricks_material:Three.Material){
       
         this.geometry = ChunkViewObject.initedGeometry.clone();
 
+        
         this.mesh = new Three.Mesh(this.geometry,bricks_material);
+        this.mesh.position.set(x*ChunkModel.xw,0,z*ChunkModel.zw);
         this.mesh.receiveShadow = true;
 
     }
@@ -82,6 +84,7 @@ class ChunkViewObject implements IViewObject{
               dy;
     }
     static getInitedGeometry(){
+
       let {positions,normals,indexes} = ChunkViewObject.getInitedAttrs(ChunkModel.xw,ChunkModel.yw,ChunkModel.zw);
 
       let len = ChunkModel.xw*ChunkModel.yw*ChunkModel.zw;
