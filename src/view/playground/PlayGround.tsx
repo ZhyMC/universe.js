@@ -1,5 +1,5 @@
 import * as Three from "three";
-import React from "react";
+import * as React from "react";
 
 import {ViewObjectManager} from "../viewobject/manager/ViewObjectManager";
 import {SimpleViewObject} from "../viewobject/SimpleViewObject";
@@ -23,7 +23,12 @@ class PlayGround{
         this.initCamera();
     }
     private initUI(){
-        this.ui = <mesh></mesh>;
+        this.ui = (
+  
+            <div style={{color:"white"}}>
+                this is ui layer!
+            </div>
+         );
     }
     private initSunlight(){
 

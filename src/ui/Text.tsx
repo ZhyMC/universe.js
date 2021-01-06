@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import  'react-three-fiber'
 
 class Text extends React.Component {

@@ -1,6 +1,5 @@
-import MouseTrap from "mousetrap";
+import MouseTrap = require("mousetrap");
 import {IController} from "../../controller/IController";
-import {ICommand} from "../ICommand";
 
 class HTMLCommandContext implements IController{
     private keymap : Map<string,boolean> = new Map();

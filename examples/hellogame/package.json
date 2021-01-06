@@ -10,9 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "realpathify": "^1.0.1",
+    "three": "^0.124.0",
     "universe.js": "file:../.."
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-es2017": "^7.0.0-beta.53",
+    "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "tsify": "^5.0.2",
     "typescript": "^4.1.3"

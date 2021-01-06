@@ -1,5 +1,5 @@
 import {IUniverseDB,Change,RowData,FindCondition} from "./IUniverseDB";
-import Loki from "lokijs";
+import Loki = require("lokijs");
 
 
 class LokiDB implements IUniverseDB{
