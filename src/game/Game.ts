@@ -1,4 +1,3 @@
-import * as Three from "three";
 import {IController} from "../universe/controller/IController";
 import {Controllers} from "../universe/controller/Controllers";
 import {CommandManager} from "../universe/command/CommandManager";
@@ -13,9 +12,7 @@ import {IUniverseDB} from "../universe/data/db/IUniverseDB";
 import {NoDB} from "../universe/data/db/NoDB";
 import {ComposeDB,  DBConfig } from "../universe/data/db/ComposeDB";
 
-const sleep = (time:number)=>new Promise((resolve)=>setTimeout(resolve,time));
-
-class WebGLGame{
+class Game{
     protected commander : CommandManager;
     protected viewobj_manager : IViewObjectManager;
     protected material_manager : MaterialManager;
@@ -26,13 +23,10 @@ class WebGLGame{
 
     private controllers : Controllers;
 
-    private renderer;
-
     private alive : boolean = false;
-    private rendering : boolean =  false;
     private tick = 0;
 
-    constructor(canvas:HTMLCanvasElement){
+    constructor(){
 
         this.commander = new CommandManager();
         this.playground = new PlayGround();
@@ -41,15 +35,16 @@ class WebGLGame{
         this.viewobj_manager = this.playground.getViewObjectManager();
        
         this.controllers = new Controllers();
-
-        this.renderer = new Three.WebGLRenderer({
-            canvas
-        });
-        this.renderer.shadowMap.enabled = false;
-        this.renderer.shadowMap.type = Three.PCFSoftShadowMap;
-
         
-        
+    }
+    getUI(){
+        return this.playground.getUI();
+    }
+    getScene(){
+        return this.playground.getScene();
+    }
+    getCamera(){
+        return this.playground.getCamera();
     }
     getPlayGround(){
         return this.playground;
@@ -63,9 +58,7 @@ class WebGLGame{
     addController(controller : IController){
         this.controllers.addController(controller);
     }
-    setRendering(r:boolean){
-        this.rendering = r;
-    }
+    
     async init(){
         this.inited = true;
     }
@@ -78,41 +71,28 @@ class WebGLGame{
         this.alive = true;
         await this.db.open();
         await this.controllers.start();
-        this.next_render_loop();
-
-      
- 
+        this.next_tick();
     }
-    private async start_fixed_loop(thing:()=>Promise<void>,time:number){
-        while(this.alive){
-
-            await thing();
-            await sleep(time);
-        }
-    }
-    private async render(){
+    private async doTick(){
         
         await this.controllers.doTick(this.tick);
         await this.material_manager.doTick(this.tick);
         await this.db.clearChanges();
 
-        if(this.rendering)
-            this.renderer.render(this.playground.getScene(),this.playground.getCamera() as Three.Camera);
-
+    
         if(this.alive)
-            this.next_render_loop();
+            this.next_tick();
 
         this.tick++;
         
     }
-    private next_render_loop(){
-        requestAnimationFrame(this.render.bind(this));
+    private next_tick(){
+        requestAnimationFrame(this.doTick.bind(this));
     }
-
     close(){
         this.alive = false;
     }
 
 }
    
-export {WebGLGame};
+export {Game};

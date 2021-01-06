@@ -3,17 +3,21 @@
     <head>
 
         <style>
-            #canvas{
-                width:900px;
-                height:540px;
+            body{
+                margin:0;
             }
+            #playground{
+                width:100vw;
+                height:calc( 100vw * 0.5625 );
+            }
+            
         </style>
     </head>
 
     <div id="count"></div>
     <div id="frame"></div>
 
-    <canvas id="canvas" width="900" height="540"></canvas>
+    <canvas id="playground" width="960" height="540"></canvas>
     <script src="game.js"></script>
 
     <script type = "module">
@@ -24,19 +28,21 @@
             document.getElementById("count").innerHTML = count++;
         },1);
 
-        let canvas = document.querySelector("#canvas");
+        let playground = document.querySelector("#playground");
 
-        let game = new Game.default(canvas,"assets");
+        let game = new Game.Game("assets");
+        let renderer = new Game.Renderer(playground,game);
 
         game.init().then(()=>{
             console.log("game loaded");
             game.start();
-            game.setRendering(true);
+            renderer.startRender();
+
             let pg = game.getPlayGround();
 
-            let controls = new OrbitControls(pg.getCamera(),canvas);
-            console.log(controls)
-            controls.target.set(0,0,0);
+           // let controls = new OrbitControls(pg.getCamera(),canvas);
+            //console.log(controls)
+            //controls.target.set(0,0,0);
             /*setInterval(()=>{
                 controls.update();
             },10);*/

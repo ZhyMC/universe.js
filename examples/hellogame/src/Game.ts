@@ -9,11 +9,11 @@ import {DataModels} from "./data/DataModels";
 import {DBConfig} from "./data/DBConfig";
 
 
-class Game extends Universe.game.WebGLGame{
+export class Game extends Universe.game.Game{
     private cmd_ctx;
     private assets_dir;
-    constructor(canvas:HTMLCanvasElement,assets_dir:string){
-        super(canvas);
+    constructor(assets_dir:string){
+        super();
 
         this.assets_dir = assets_dir;
 
@@ -57,5 +57,7 @@ class Game extends Universe.game.WebGLGame{
     }
 }
 
-//(window as any).Game = Game;
-export default Game;
+export class Renderer extends Universe.renderer.CanvasRenderer{
+    
+}
+

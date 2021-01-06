@@ -10,7 +10,7 @@ export * as viewobject from "./view/viewobject";
 export * as shader from "./shaders";
 export * as map from "./map";
 export * as game from "./game";
-
+export * as renderer from "./renderer";
 
 export { Controller , ViewController } from "./universe/controller";
 export { DataModel } from "./universe/data";

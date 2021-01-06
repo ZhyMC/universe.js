@@ -1,4 +1,6 @@
 import * as Three from "three";
+import React from "react";
+
 import {ViewObjectManager} from "../viewobject/manager/ViewObjectManager";
 import {SimpleViewObject} from "../viewobject/SimpleViewObject";
 
@@ -8,14 +10,20 @@ class PlayGround{
     private scene : Three.Scene;
     private camera? : Three.Camera;
     private dlight? : Three.DirectionalLight;
+    private ui? : React.ReactNode;
+
     constructor(){
         this.scene = new Three.Scene();
         this.scene.background = new Three.Color("black");
 
         this.obj_manager = new ViewObjectManager(this.scene);
 
+        this.initUI();
         this.initSunlight();
         this.initCamera();
+    }
+    private initUI(){
+        this.ui = <mesh></mesh>;
     }
     private initSunlight(){
 
@@ -49,6 +57,9 @@ class PlayGround{
     }
     getCamera(){
         return this.camera;
+    }
+    getUI(){
+        return this.ui;
     }
 }
 

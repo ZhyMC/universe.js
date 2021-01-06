@@ -1,1 +1,1 @@
-export * from "./WebGLGame";
+export * from "./Game";

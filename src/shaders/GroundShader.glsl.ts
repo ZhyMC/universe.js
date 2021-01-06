@@ -57,7 +57,7 @@ const frag =
           
           vec3 uvcolor = texture2D(tex,vUv).xyz;
           
-          float val = min(ratio*diffuse*lightness+0.3,1.0);
+          float val = 1.2*min(ratio*diffuse*lightness+0.3,1.0);
 
           gl_FragColor = vec4(val*uvcolor,1.0);
       }
