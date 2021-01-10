@@ -43,18 +43,29 @@ class LokiDB implements IUniverseDB{
             return obj;
         });
     }
-    async getDeltaChanges(sheets:string[] = []){
+    private convertChange(collchange : CollectionChange){
+        if(["U","I","D"].indexOf(collchange.operation)==-1)
+            throw new Error(`row.operation ${collchange.operation} is unknown`);
+        let operation = collchange.operation as "U" | "I" | "D";
+        
+        let is = operation != "D";
+        return {sheet:collchange.name,operation,is,unikey:`${collchange.name}#${collchange.obj.$loki}`,row:collchange.obj};
+        
+    }
+    async getSheetChanges(sheet:string){
         let arr =this.cached;
         let all = arr.map((row)=>{
-            if(["U","I","D"].indexOf(row.operation)==-1)
-                throw new Error(`row.operation ${row.operation} is unknown`);
-            let operation = row.operation as "U" | "I" | "D";
-            
-            return {sheet:row.name,operation,row:row.obj}
+            return this.convertChange(row);
         });
-
-        return all.filter((x)=>(sheets.indexOf(x.sheet) != -1))
-
+        return all.filter((x)=>(sheet == x.sheet));
+    }
+    async getCompChanges(comp:string){
+        let ret : Change[] = [];
+        this.cached.forEach((change)=>{
+            if(change.obj[comp])
+                ret.push(this.convertChange(change));
+        })
+        return ret;
     }
     async clearChanges(){
         this.cached = this.db.generateChangesNotification().concat([]); 

@@ -1,10 +1,12 @@
 import * as Three from "three";
-import {IViewObject} from "./define/IViewObject";
+import {IViewObject} from "../IViewObject";
+import {ThreeViewObject} from "./ThreeViewObject";
 
-class PointLightViewObject implements IViewObject{
+class PointLightViewObject extends ThreeViewObject{
     private light : Three.PointLight;
 
     constructor(){
+        super();
         this.light = new Three.PointLight();
         this.light.castShadow = true;
     }

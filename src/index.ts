@@ -8,12 +8,12 @@ export * as controller from "./universe/controller";
 export * as view from "./view";
 export * as viewobject from "./view/viewobject";
 export * as shader from "./shaders";
-export * as map from "./map";
+export * as map from "./preset/blockmap";
 export * as game from "./game";
 export * as renderer from "./renderer";
 
 export { Controller , ViewController } from "./universe/controller";
 export { DataModel } from "./universe/data";
 export { db } from "./universe/data";
-export * from "./map";
+export * from "./preset/blockmap";
 export * from "./view/viewobject";

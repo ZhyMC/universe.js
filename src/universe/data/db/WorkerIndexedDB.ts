@@ -41,14 +41,16 @@ class WorkerWebIndexedDB implements IUniverseDB{
     async findAndUpdate(sheet: string, condi: RowData, delta: RowData): Promise<void> {
         return this.worker.send("findAndUpdate",[sheet,condi,delta]);
     }
-    async getDeltaChanges(sheets?: string[]): Promise<Change[]> {
-        
-        return this.cached.filter((x)=>{
-            if(!sheets)
-                return true;
-
-            return sheets.indexOf(x.sheet)!=-1;
-        });
+    async getSheetChanges(sheet: string): Promise<Change[]> {        
+        return this.cached.filter((x)=>(x.sheet == sheet));
+    }
+    async getCompChanges(comp:string) : Promise<Change[]>{
+        let ret : Change[] = [];
+        this.changes.forEach((change)=>{
+            if(change.row[comp])
+                ret.push(change);
+        })
+        return ret;
     }
     async clearChanges(): Promise<void> {
         this.cached = this.changes.concat([]);

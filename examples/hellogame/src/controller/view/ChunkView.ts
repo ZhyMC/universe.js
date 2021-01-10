@@ -9,21 +9,18 @@ class ChunkView extends Universe.ViewController{
     }
     
     private async doChunkTick(){
-        let changes = await this.db.getDeltaChanges(["Chunk"]);
-        let changed = changes.map(({row})=>{
-            return new ChunkModel(row.x,row.z,this.db);
-        });
+        let changes = await this.db.getSheetChanges("Chunk");
         
-        for(let chunk of changed){
-            await this.viewobj.ensure(chunk.getKey(),await chunk.has(),async ()=>{
-                let obj = new ChunkViewObject(chunk.x,chunk.z,this.mtl.getBasicMtl("brickmap"));
-                return obj;
-            });
+        for(let change of changes){
+            let {x,z} = change.row;
+            await this.viewobj.ensure(ChunkModel.getKey(x,z),change.is,()=>
+                new ChunkViewObject(x,z,this.mtl.getBasicMtl("brickmap"))
+            );
         }
 
     }
     private async doBricksTick(){
-        let changes = await this.db.getDeltaChanges(["Brick"]);
+        let changes = await this.db.getSheetChanges("Brick");
 
         let viewobjs = new Set<ChunkViewObject>();
         for(let {row} of changes){

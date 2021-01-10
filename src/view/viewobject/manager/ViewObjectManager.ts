@@ -1,44 +1,55 @@
-import {PlayGround} from "../../playground/PlayGround";
-import {IViewObject} from "../define/IViewObject";
+import {IViewObject} from "../IViewObject";
 import {IViewObjectManager} from "./IViewObjectManager";
+import * as Mobx from "mobx";
 import * as Three from "three";
+import * as React from "react";
 
 class ViewObjectManager implements IViewObjectManager{
     private vobjs:Map<string,IViewObject> = new Map();
     private keymap:Map<IViewObject,string> = new Map();
-    
+    private uistore : Mobx.ObservableSet<React.ReactNode>;
     private scene : Three.Scene;
-    constructor(scene:Three.Scene){
+    constructor(scene:Three.Scene,uistore:Mobx.ObservableSet<React.ReactNode>){
         this.scene = scene;
+        this.uistore = uistore;
     }
     async ensure<T extends IViewObject>(key:string,exists:boolean,factory:()=>Promise<T> | T) : Promise<T>{
-        let val = this.vobjs.get(key)
+        let val = this.vobjs.get(key) as T;
 
         if(exists && !val){
             let ins = await factory();
             this.set(key,ins); 
-            return ins;   
+            return ins;
         }else if(!exists && val){
             this.remove(key);
         }
         
-            return val as T;
+        return val;
         
     }
     set(key:string,vobj:IViewObject){
         if(!this.has(key)){
-            this.scene.add(vobj.o3);
-            
+            try{
+                if(vobj.is3DObject)this.scene.add(vobj.o3)
+                if(vobj.isUIObject)this.uistore.add(vobj.ui);    
+            }catch(err){
+                console.error(err);
+            }
         }
 
         this.vobjs.set(key,vobj);
         this.keymap.set(vobj,key);
+
+
     }
     remove(key:string):void{
         let vobj = this.query(key);
         this.vobjs.delete(key);
-        this.scene.remove(vobj.o3);
         this.keymap.delete(vobj);
+
+        this.scene.remove(vobj.o3);
+        this.uistore.delete(vobj.ui);
+
     }
     has(key:string):boolean{
         return this.vobjs.has(key);

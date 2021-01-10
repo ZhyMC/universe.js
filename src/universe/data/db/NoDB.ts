@@ -25,7 +25,10 @@ class NoDB implements IUniverseDB{
     findAndUpdate(sheet: string, condi: RowData, delta: RowData): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    async getDeltaChanges(sheets?: string[]):Promise<Change[]>{
+    async getSheetChanges(sheets: string):Promise<Change[]>{
+        throw new Error("Method not implemented.");
+    }
+    async getCompChanges(comp: string): Promise<Change[]> {
         throw new Error("Method not implemented.");
     }
     async has(sheet:string,condi:FindCondition) :Promise<boolean>{

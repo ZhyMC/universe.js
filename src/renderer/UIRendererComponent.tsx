@@ -42,7 +42,7 @@ export class UIRendererComponent extends React.Component<RendererProp>{
     render(){
         return (
             <div style={{position:"absolute",userSelect:"none",width:"100%",height:"100%"}}>
-                <div style={{position:"absolute"}} id="UIContainer">
+                <div style={{position:"absolute",color:"white",width:"100%"}} id="UIContainer">
                     {this.props.game.getUI()}
                 </div>
                 <canvas style={{width:"100%",height:"100%"}} width="960" height="540" ref={this.canvasRef} />

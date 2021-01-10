@@ -4,3 +4,5 @@ export * from "./ChunkLoader";
 export * from "./ChunkDataParser";
 export * from "./ChunkDataBuilder";
 export * from "./BrickModel";
+export * from "./BrickViewObject"
+export * from "./ChunkViewObject"

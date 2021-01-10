@@ -1,7 +1,7 @@
-import {BindedModel} from "../universe/model/BindedModel";
+import {BindedModel} from "../../universe/model/BindedModel";
 import {ChunkLoader} from "./ChunkLoader";
 import {ChunkModel} from "./ChunkModel";
-import {IUniverseDB} from "../universe/data/db/IUniverseDB";
+import {IUniverseDB} from "../../universe/data/db/IUniverseDB";
 
 class ChunkManagerModel extends BindedModel{
     

@@ -1,9 +1,9 @@
-import {DataModel} from "../universe/data/DataModel";
-import {BindedModel} from "../universe/model/BindedModel";
-import {BrickModel} from "../map/BrickModel";
+import {DataModel} from "../../universe/data/DataModel";
+import {BindedModel} from "../../universe/model/BindedModel";
+import {BrickModel} from "./BrickModel";
 import {ChunkDataBuilder} from "./ChunkDataBuilder";
 import {ChunkDataParser} from "./ChunkDataParser";
-import {IUniverseDB} from "../universe/data/db/IUniverseDB";
+import {IUniverseDB} from "../../universe/data/db/IUniverseDB";
 
 class ChunkModel extends BindedModel{
     static xw: number = 32;

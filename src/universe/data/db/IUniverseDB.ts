@@ -7,6 +7,8 @@ export type FindCondition = RowData;
 
 export type Change = {
     sheet : string,
+    unikey : string,
+    is : boolean,
     operation : "I" | "U" | "D",
     row : RowData
 }
@@ -22,7 +24,8 @@ export interface IUniverseDB{
     has(sheet:string,condi? : FindCondition) : Promise<boolean>;
     findAndRemove(sheet:string,condi:FindCondition) : Promise<void>;
     findAndUpdate(sheet:string,condi:FindCondition,delta:RowData) : Promise<void>;
-    getDeltaChanges(sheets?:Array<string>) : Promise<Array<Change>>
+    getSheetChanges(sheets:string) : Promise<Array<Change>>
+    getCompChanges(comp:string) : Promise<Array<Change>>
     clearChanges() : Promise<void>;
     
 }

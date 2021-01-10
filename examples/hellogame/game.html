@@ -10,6 +10,9 @@
                 width:100%;
                 height:calc( 100% * 0.5625 );
             }
+            #count{
+                display:none;
+            }
             
         </style>
     </head>
@@ -24,9 +27,9 @@
         import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
 
         let count = 0;
-        setInterval(()=>{
+        /*setInterval(()=>{
             document.getElementById("count").innerHTML = count++;
-        },1);
+        },1);*/
 
         let playground = document.querySelector("#playground");
 

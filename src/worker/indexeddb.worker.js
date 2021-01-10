@@ -31,31 +31,25 @@ class WebIndexedDB{
         let stores = Object.keys(this.stores);
         for(let store of stores){
             this.dexie.table(store).hook("creating",(primKey,obj)=>{
-                this.emitChange({
-                    sheet:store,
-                    operation:"I",
-                    row:obj
-                })
+                this.emitChange("I",store,obj,primKey);
             });
             this.dexie.table(store).hook("updating",(mods,primKey,obj)=>{
-                this.emitChange({
-                    sheet:store,
-                    operation:"U",
-                    row:obj
-                })
+                this.emitChange("U",store,obj,primKey);
             });
             this.dexie.table(store).hook("deleting",(primKey,obj)=>{
-                this.emitChange({
-                    sheet:store,
-                    operation:"D",
-                    row:obj
-                })
+                this.emitChange("D",store,obj,primKey);
             });
             
         }
     };
-    emitChange(data){
-        this.events_buffer.push({eventname:"change",data})
+    emitChange(operation,store,obj,primKey){
+        this.events_buffer.push({eventname:"change",data:{
+            sheet:store,
+            operation,
+            is:operation != "D",
+            unikey:store+'#'+primKey,
+            row:obj
+        }})
     }
     async createSheet(sheet, indexes, column) {
         let indexed = ["++id","&key"];

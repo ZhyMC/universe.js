@@ -112,15 +112,23 @@ class ComposeDB implements IUniverseDB{
 
         return map;
     }
-    async getDeltaChanges(sheets?: string[]): Promise<Change[]> {
-        let map = this.getRalatedDBMap(sheets);
+    async getSheetChanges(sheet:string): Promise<Change[]> {
+        let map = this.getRalatedDBMap([sheet]);
         let res = [];
         for(let [type,tables] of map.entries()){
             let db = this.dbs.get(type) as IUniverseDB;
-            res.push(...await db.getDeltaChanges(tables));
+            for(let sheet of tables)
+                res.push(...await db.getSheetChanges(sheet));
         }
         return res;
     }
+    async getCompChanges(comp:string){
+        let ret = [];
+        for(let db of this.dbs.values())
+            ret.push(...await db.getCompChanges(comp));
+        return ret;
+    }
+
     async clearChanges(): Promise<void> {
         let map = this.getRalatedDBMap();
 

@@ -1,13 +1,17 @@
 import * as Three from "three";
-import {IViewObject} from "./define/IViewObject";
+import {ThreeViewObject} from "./ThreeViewObject";
 
-class SpriteViewObject implements IViewObject{
+class SpriteViewObject extends ThreeViewObject{
     private sprite : Three.Mesh;
-    private scale:{x:number,y:number};
-    constructor(scale:{x:number,y:number}){
+    private scale:{x:number,y:number} = {x:1.5,y:1.5};
+    constructor(){
+        super();
+
         this.sprite = new Three.Mesh(new Three.PlaneBufferGeometry());
         this.sprite.castShadow = true;
 
+    }
+    setScale(scale:{x:number,y:number}){
         this.scale = scale;
     }
     setImageMtl(mtl:Three.Material){

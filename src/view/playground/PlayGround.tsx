@@ -1,8 +1,13 @@
 import * as Three from "three";
 import * as React from "react";
+import * as Mobx from "mobx";
+import * as MobxReact from "mobx-react";
+Mobx.configure({enforceActions:'never'});
 
 import {ViewObjectManager} from "../viewobject/manager/ViewObjectManager";
-import {SimpleViewObject} from "../viewobject/SimpleViewObject";
+import {SimpleViewObject} from "../viewobject/3dobject/SimpleViewObject";
+import {UIContainerComponent} from "./UIContainer";
+
 
 
 class PlayGround{
@@ -12,23 +17,26 @@ class PlayGround{
     private dlight? : Three.DirectionalLight;
     private ui? : React.ReactNode;
 
+    private uistore:Mobx.ObservableSet<React.ReactNode>
+    = Mobx.observable.set([],{deep:false});
+
     constructor(){
         this.scene = new Three.Scene();
         this.scene.background = new Three.Color("black");
-
-        this.obj_manager = new ViewObjectManager(this.scene);
+        
+        this.obj_manager = new ViewObjectManager(this.scene,this.uistore);
 
         this.initUI();
         this.initSunlight();
         this.initCamera();
+
     }
     private initUI(){
         this.ui = (
-  
-            <div style={{color:"white"}}>
-                this is ui layer!
-            </div>
+                <UIContainerComponent components={this.uistore}>
+                </UIContainerComponent>
          );
+         
     }
     private initSunlight(){
 

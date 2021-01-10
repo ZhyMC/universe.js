@@ -1,5 +1,5 @@
 import { Buffer } from "buffer";
-import {Model} from "../universe/model/Model";
+import {Model} from "../../universe/model/Model";
 import {BrickModel, BrickBinaryData } from "./BrickModel"
 import {ChunkModel} from "./ChunkModel";
 

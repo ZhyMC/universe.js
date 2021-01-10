@@ -1,8 +1,8 @@
 import * as Three from "three";
-import {ChunkModel} from "../../map/ChunkModel";
-import {IViewObject} from "./define/IViewObject";
+import {ChunkModel} from "./ChunkModel";
+import {ThreeViewObject} from "../../view/viewobject/3dobject/ThreeViewObject";
 
-class ChunkViewObject implements IViewObject{
+class ChunkViewObject extends ThreeViewObject{
     static faces = [
       { // left
         dir: [ -1,  0,  0, ],
@@ -68,7 +68,8 @@ class ChunkViewObject implements IViewObject{
     private mesh : Three.Mesh;
 
     constructor(x:number,z:number,bricks_material:Three.Material){
-      
+        super();
+        
         this.geometry = ChunkViewObject.initedGeometry.clone();
 
         

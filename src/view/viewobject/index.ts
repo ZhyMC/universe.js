@@ -1,8 +1,10 @@
-export * from "./BrickViewObject";
-export * from "./ChunkViewObject";
-export * from "./PointLightViewObject";
-export * from "./SimpleViewObject";
-export * from "./SpriteViewObject";
 export * from "./manager/IViewObjectManager";
 export * from "./manager/ViewObjectManager";
-export * from "./define/IViewObject";
+export * from "./IViewObject";
+
+
+export * from "./3dobject/PointLightViewObject";
+export * from "./3dobject/SimpleViewObject";
+export * from "./3dobject/SpriteViewObject";
+
+export * from "./uiobject/TextViewObject";

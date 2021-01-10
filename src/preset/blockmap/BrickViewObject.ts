@@ -1,12 +1,13 @@
 import * as Three from "three";
-import {IViewObject} from "./define/IViewObject";
+import {ThreeViewObject} from "../../view/viewobject/3dobject/ThreeViewObject";
 
-class BrickViewObject implements IViewObject{
+class BrickViewObject extends ThreeViewObject{
     private brick : Three.BoxBufferGeometry;
     private obj : Three.Mesh;
     static geometry = new Three.BoxBufferGeometry(1,1,1);
 
     constructor(){
+        super();
         this.brick = BrickViewObject.geometry;
         this.obj = new Three.Mesh(this.brick);
     }
